@@ -1,0 +1,9 @@
+.about-wrapper{
+    background: url('../../assets/images/about-top.png') no-repeat 100% 0%, url('../../assets/images/about-bottom.png') no-repeat 0% 100%;
+}
+.jet-jams-games-wrapper{
+    background: url('../../assets/images/jet-jams-top.png') no-repeat 0% 45%;
+}
+.user-wrapper-bg{
+    background: url('../../assets/images/site-bg.png') no-repeat 0% 0% / cover;
+}

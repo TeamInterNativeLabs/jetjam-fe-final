@@ -1,0 +1,54 @@
+.play-video-btn {
+    width: 118px;
+    height: 118px;
+    background: linear-gradient(93.5deg, #8D0CDD 2.88%, #C67BFC 155.83%);
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: 55px;
+    color: white;
+    padding-left: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+.site-video{
+    position: relative;
+}
+.site-video img{
+    object-fit: cover;
+    object-position: center;
+}
+.video-modal .modal-dialog{
+    max-width: 900px;
+}
+.video-modal .modal-content{
+    background: #000000;
+}
+.video-modal .close-btn{
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(93.5deg, #8D0CDD 2.88%, #C67BFC 155.83%);
+    border: 2px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    font-size: 18px;
+    color: white;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+}
+.video-modal .modal-content .py-4{
+    padding: 0 !important;
+}
+.video-modal video[poster], .video-modal video{
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    object-position: center;
+}

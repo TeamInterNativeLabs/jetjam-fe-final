@@ -1,0 +1,31 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { formatSecondsToHHMM } from "../../../Utils/helper";
+
+const SongCard = ({ data, size = "sm" }) => {
+  const { image, name, length = 0, _id, genre } = data;
+
+  const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${image}`;
+
+  return (
+    <Link className="d-block" to={`/album-details/${_id}`}>
+      <div className="song-card">
+        <img src={img} alt="" className="img-fluid song-card-img" />
+        <div className="song-card-gradient"></div>
+        <div className="song-card-inner">
+          <div className="d-flex align-items-center gap-2">
+            <div className="flex-grow-1">
+              <p className={`semi-bold p-${size} mb-0`}>{name}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <p className={`mb-0 p-${size}`}>{formatSecondsToHHMM(length)}</p>
+            </div>
+          </div>
+          <p className="mb-0 p-sm">{genre?.name}</p>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default SongCard;

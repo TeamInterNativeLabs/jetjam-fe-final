@@ -1,0 +1,46 @@
+import { createSlice } from "@reduxjs/toolkit"
+import { authApiService } from "../../Services/Auth"
+import { userApiService } from "../../Services/User"
+
+let initialState = {
+    isLoggedIn: false,
+    token: null,
+    user: null
+}
+
+export const AuthSlice = createSlice({
+    name: 'authSlice',
+    initialState,
+    reducers: {
+        logout: (state) => {
+            state.isLoggedIn = false
+            state.token = null
+            state.user = null
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(authApiService.endpoints.login.matchFulfilled, (state, action) => {
+            let { success, token, data } = action.payload
+            if (success) {
+                state.isLoggedIn = success
+                state.token = token
+                state.user = data
+            } else {
+                state.isLoggedIn = false
+                state.token = null
+                state.user = null
+            }
+        })
+        builder.addMatcher(userApiService.endpoints.updateProfile.matchFulfilled, (state, action) => {
+            let { success, data } = action.payload
+
+            if (success && state.user._id === data._id) {
+                state.user = data
+            }
+
+        })
+    }
+})
+
+export const { logout } = AuthSlice.actions
+export default AuthSlice.reducer

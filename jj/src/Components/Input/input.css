@@ -1,0 +1,91 @@
+.site-input{
+    border: 1px solid rgba(218, 218, 218, 0.56);
+    filter: drop-shadow(0px 8px 17px #c22c8b13);
+    border-radius: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 3px;
+    appearance: none;
+    background: transparent;
+    resize: none;
+    color: white;
+    font-weight: 400 !important;
+}
+.site-input::placeholder{
+    color: #B7B7B7;
+}
+.site-input:focus{
+    outline: none;
+    border: 1px solid #C22C8C;
+}
+textarea.site-input{
+    border-radius: 5px;
+}
+.login-bg .site-input{
+    padding: 15px 25px 15px 50px;
+}
+/*radio styles*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.site-label{
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+.right-icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    cursor: pointer;
+}
+select.site-input{
+    background: url('../../assets/images/select-arrow.png') no-repeat 95% 50%, transparent;
+}
+.login-left-card select.site-input{
+    background: url('../../assets/images/select-arrow.png') no-repeat 95% 50%, #F4F4F4;
+}
+input.form-control.site-input:read-only, input.site-input:read-only {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #666666;
+    padding: 0;
+}
+
+.web-input{
+    background-color: #EEEEEE;
+    border: 1px solid transparent;
+}
+select.web-input{ 
+    background: url('../../assets/images/select-arrow.png') no-repeat 95% 50%, #EEEEEE;
+}
+
+.grey-input{
+    background-color: rgb(246, 246, 246, .84);
+    border: 1px solid #EAEAEA;
+}
+select.grey-input{ 
+    background: url('../../assets/images/select-arrow.png') no-repeat 95% 50%, rgb(246, 246, 246, .84);
+}
+
+.banner-input{
+    font-size: 12px !important;
+    padding: 10px;
+}
+.left-icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+    padding: 10px 8px 10px 0;
+    border-right: 1px solid rgb(255, 255, 255, .34);
+}

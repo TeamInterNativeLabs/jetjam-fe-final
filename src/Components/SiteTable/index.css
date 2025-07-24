@@ -1,0 +1,31 @@
+.custom-table th, .custom-table td{
+    background: transparent;
+    border: 0;
+}
+.custom-table th{
+    padding-bottom: 0;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Azonix', sans-serif;
+    font-weight: 400;
+    padding: 0 20px 0 20px;
+}
+.custom-table td{
+    border-top: 1px solid rgb(255, 255, 255, .42);
+    padding: 12px 20px 12px 20px;
+    border-bottom: 1px solid rgb(255, 255, 255, .42);
+    color: #AFAFAF;
+}
+.custom-table td:first-child{
+    border-left: 1px solid rgb(255, 255, 255, .42);
+}
+.custom-table td:last-child{
+    border-right: 1px solid rgb(255, 255, 255, .42);
+}
+.custom-table td:last-child, .custom-table th:last-child{
+    text-align: center;
+}
+.custom-table{
+    border-collapse: separate;
+    border-spacing: 0 20px;
+}

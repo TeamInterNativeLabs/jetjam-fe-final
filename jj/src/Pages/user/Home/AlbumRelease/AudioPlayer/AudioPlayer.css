@@ -1,0 +1,72 @@
+/* .editor {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.editor-section {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+} */
+.album-release-container .rm-audio-player-provider{
+    position: static !important;
+}
+.album-release-container{
+    display: block !important;
+}
+.album-release-container .track-info-container, .album-release-container .volume-trigger-container, .album-release-container .repeat-button, .album-release-container .drawer-container{
+    display: none;
+}
+.album-release-container .interface-grid{
+    display: flex !important;
+    flex-direction: column;
+}
+.album-release-container .interface-grid div{width: calc(100% - 40px) !important; margin: 0 auto;}
+.album-release-container .interface-grid div:has(.artwork-container), .album-release-container .interface-grid div:has(.progress-container), .album-release-container .interface-grid .bar-progress-wrapper{width: 100% !important; margin: 0 auto;}
+.album-release-container div{
+    background: transparent !important;
+}
+.album-release-container .rm-player-progress-bar{
+    background: rgb(255, 255, 255, .3) !important;
+}
+.album-release-container .rm-player-progress{
+    background: #F6D027 !important;
+}
+.album-release-container{
+    margin: 0 auto;
+    width: 100% !important;
+}
+.album-release-container .btn-wrapper{
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px !important;
+}
+.album-release-container .btn-wrapper .play-button svg, .album-release-container .btn-wrapper .play-button svg path{
+    width: 30px !important;
+    height: 30px !important;
+}
+.album-release-container .btn-wrapper button{
+    transform: scale(1.5);
+    color: white !important;
+}
+.album-release-container .artwork-container img{
+    width: 100%;
+    height: 100%;
+}
+.album-release-container .track-time-current-container{
+    display: none;
+}
+.album-release-container .track-time-duration-container{
+    display: none;
+}
+.album-release-container div:has(.progress-container) {
+    order: 5;
+}
+canvas {
+    display: block;
+    width: 100%;
+    height: 100px;
+    background-color: black;
+  }

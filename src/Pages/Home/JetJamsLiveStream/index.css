@@ -1,0 +1,40 @@
+#waveform {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.rm-player-progress-bar{
+    height: 7px !important;
+    border-radius: 10px !important;
+    background: rgba(227, 111, 115, 0.31) !important;
+}
+.audio-play-btn{
+    transform: none !important;
+    font-size: 18px !important;
+}
+.disc-moving{
+    animation: movingDisc 2s linear infinite;
+    -webkit-animation: movingDisc 2s linear infinite;
+    -moz-animation: movingDisc 2s linear infinite;
+}
+.jet-jams-live-stream{
+    overflow: hidden;
+}
+@keyframes movingDisc {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+@media screen and (min-width: 1200px) {
+    .live-stream-audio-player{
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width: 575px) {
+    .disc-img{
+        width: 50px;
+    }
+}

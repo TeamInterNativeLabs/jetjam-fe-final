@@ -1,0 +1,40 @@
+.album-release {
+  /* background: url('../../../assets/images/album-release-bg.png') no-repeat;
+    background-size: cover;
+    background-position: center; */
+  color: white;
+  padding: 100px 0;
+}
+.beat-mix-img {
+  aspect-ratio: 1/1;
+  width: 100%;
+  border-radius: 25px !important;
+  object-fit: cover;
+  object-position: center;
+}
+@media screen and (min-width: 1200px) {
+  .w-150 {
+    width: 150px !important;
+  }
+  .beat-mix-slider {
+    width: calc(100% - 170px);
+  }
+}
+.feature-card {
+  background: linear-gradient(
+    108.95deg,
+    rgba(255, 255, 255, 0.28) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: drop-shadow(11px 12px 36px rgba(0, 0, 0, 0.1))
+    drop-shadow(42px 49px 65px rgba(0, 0, 0, 0.09))
+    drop-shadow(95px 111px 88px rgba(0, 0, 0, 0.05))
+    drop-shadow(170px 198px 104px rgba(0, 0, 0, 0.01));
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.slider-container {
+  width: 93%;
+  margin: auto;
+}

@@ -1,0 +1,40 @@
+.banner{
+    background: url('../../../../assets/images/banner-bg.png') no-repeat;
+    background-size: cover;
+    position: relative;
+    background-position-x: center;
+    background-position-y: top;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 150px 0;
+    color: white;
+}
+.banner-sign{
+    position: absolute;
+    bottom: -110px;
+    right: 30px;
+}
+.banner-text{
+    max-width: 800px;
+}
+.banner-bottom{
+    position: absolute;
+    bottom: 0;
+    width: 84%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.banner-inner{
+    position: relative;
+    z-index: 1;
+}
+@media screen and (max-width: 1199px) {
+}
+@media screen and (max-width: 991px) {
+    .banner br{display: none;}
+}
+@media screen and (max-width: 575px) {
+    .banner{padding: 130px 0 35px 0;}
+}

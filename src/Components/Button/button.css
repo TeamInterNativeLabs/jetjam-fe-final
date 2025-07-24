@@ -1,0 +1,83 @@
+.site-btn {
+  background: #f6d027;
+  border: 1px solid #f6d027;
+  border-radius: 0;
+  color: #000000;
+  padding: 13px 30px;
+  min-width: 160px;
+  transition: ease-in-out 0.2s;
+  text-transform: uppercase;
+  font-family: "Akira Expanded", sans-serif;
+}
+.site-btn:hover {
+  background: transparent;
+  color: #f6d027;
+}
+.orange-btn {
+  background: #ae1f25;
+  border-color: #ae1f25;
+  color: white;
+}
+.orange-btn:hover {
+  background: transparent;
+  color: #ae1f25;
+}
+.subscription-cards-wrapper .col-lg-4:nth-child(2) .site-btn {
+  background: #ff001f;
+  border-color: #ff001f;
+  color: white;
+}
+.subscription-cards-wrapper .col-lg-4:nth-child(2) .site-btn:hover {
+  background: transparent;
+  color: #ff001f;
+}
+.border-btn {
+  background: transparent;
+  border: 1px solid #9b9b9b !important;
+}
+.border-btn:hover {
+  background: #f6d027;
+  border: 1px solid #f6d027 !important;
+}
+.add-to-cart-btn {
+  transition: ease-in-out 0.2s;
+}
+.add-to-cart-btn:hover {
+  background: #f6d027;
+}
+
+.responsive-header-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+/* Medium and up: switch to row layout */
+@media (min-width: 768px) {
+  .responsive-header-btn {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+}
+
+/* Responsive heading text */
+.responsive-heading {
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .responsive-heading {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-heading {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,10 @@
+.shadow-divider{
+    position: relative;
+}
+.shadow-divider img{
+    width: 100%;
+    position: absolute;
+    top: -80px;
+    height: 160px;
+    opacity: .9756;
+}

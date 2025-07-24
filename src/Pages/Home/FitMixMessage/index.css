@@ -1,0 +1,23 @@
+.hollow-text{
+    color: black;
+    -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke: 1px white;
+}
+.fit-mix-img{
+    position: relative;
+}
+.fit-mix-img::after{
+    content: '';
+    background: url('../../../assets/images/fit-mix-bg.png') no-repeat 50% 50% / 100% 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: contain;
+}
+.fit-mix-img img{
+    position: relative;
+    z-index: 1;
+}

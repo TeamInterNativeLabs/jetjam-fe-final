@@ -1,0 +1,6 @@
+.subscription-card{
+    background: linear-gradient(180deg, rgba(21, 14, 9, 0.53) 0%, rgba(29, 12, 0, 0.16) 100%);
+    backdrop-filter: blur(60px);
+    border-radius: 28.344px;
+    padding: 40px 30px;
+}

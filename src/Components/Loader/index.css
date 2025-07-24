@@ -1,0 +1,60 @@
+/* Loader Start */
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loader-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    width: 150px;
+    height: 150px;
+    background: rgba(90, 90, 90, 0.8);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.frequency-loader {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.bar {
+    width: 10px;
+    height: 50px;
+    background: linear-gradient(to top, #ff8a80, #ffcc80);
+    animation: bounce 1s infinite ease-in-out;
+    transform-origin: bottom;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scaleY(0.3);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
+}
+
+/* Loader Ends */
