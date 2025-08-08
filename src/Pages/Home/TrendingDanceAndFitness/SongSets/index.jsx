@@ -3,8 +3,9 @@ import Slider from "react-slick";
 import SongCard from "../SongCard";
 import { Link } from "react-router-dom";
 import EmptyComponent from "../../../../Components/EmptyComponent";
+import SliderComp from "../../../../Components/general/SliderComp";
 
-const settings = {
+const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500,
@@ -15,33 +16,23 @@ const settings = {
       breakpoint: 1399,
       settings: {
         slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
+        slidesToScroll: 1,
         dots: true,
+        infinite: true,
       },
     },
     {
       breakpoint: 992,
       settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        initialSlide: 3,
+        slidesToShow: 2,
+        slidesToScroll: 1,
       },
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 2,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
+        slidesToShow: 4,
         slidesToScroll: 1,
-        initialSlide: 1,
       },
     },
   ],
@@ -50,16 +41,17 @@ const settings = {
 function SongSets({ title, songSets }) {
   return (
     <>
-      <div className="d-flex mb-3 align-items-center justify-content-between gap-3">
+      <div className="d-flex mb-3 align-items-center justify-content-between gap-3 ">
         <h4 className="mb-0">{title}</h4>
-        <Link to={"/beat-mixed-set"} className="l-grey-text">
+        <Link to="/beat-mixed-set" className="l-grey-text">
           See All
         </Link>
       </div>
-      <div className="slider-container">
+
+      <div className="px-4">
         {songSets?.length > 0 ? (
-          <Slider {...settings}>
-            {songSets?.map((item) => (
+          <Slider {...sliderSettings}>
+            {songSets.map((item) => (
               <div key={item._id} className="pe-3">
                 <SongCard data={item} />
               </div>

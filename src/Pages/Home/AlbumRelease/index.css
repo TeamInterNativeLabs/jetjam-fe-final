@@ -35,6 +35,6 @@
 }
 
 .slider-container {
-  width: 93%;
-  margin: auto;
+  width: 100%;
+  overflow: visible;
 }

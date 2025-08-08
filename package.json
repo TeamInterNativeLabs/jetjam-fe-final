@@ -40,6 +40,7 @@
     "react-wavesurfer.js": "^0.0.8",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.10",
     "wavesurfer.js": "^7.8.1",
     "web-vitals": "^2.1.0"
   },
