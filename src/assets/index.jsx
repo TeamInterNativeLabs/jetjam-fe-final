@@ -1,4 +1,5 @@
 import logo from "./images/logo.png";
+import placeholder from "./images/placeholder.png";
 import siteVideoPoster from "./images/site-video.png";
 import sampleVideo from "./images/sample-video.mp4";
 import shadowImg from "./images/shadow.png";
@@ -30,6 +31,7 @@ import exclamation from "./images/exclamation.png";
 
 export {
   logo,
+  placeholder,
   siteVideoPoster,
   sampleVideo,
   shadowImg,

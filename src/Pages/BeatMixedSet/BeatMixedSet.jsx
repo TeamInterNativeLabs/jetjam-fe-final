@@ -62,60 +62,66 @@ const BeatMixedSet = () => {
 
               {/* Filters */}
               <div className="d-flex align-items-center justify-content-end gap-3 flex-wrap my-3">
-                <div className="flex-grow-1">
-                  <SiteInput
-                    labelClass="d-block"
-                    label="Search"
-                    placeholder="Search here..."
-                    value={search}
-                    onChange={onChangeSearch}
-                  />
-                </div>
-                <div className="flex-shrink-0">
-                  <SiteSelect
-                    items={[
-                      ...statusOptions,
-                      ...(general?.lengths?.map((item, index) => ({
-                        id: index,
-                        value: item?.value,
-                        option: item?.label,
-                      })) || []),
-                    ]}
-                    label="Filter by Length"
-                    value={length}
-                    onChange={setLength}
-                  />
-                </div>
-                <div className="flex-shrink-0">
-                  <SiteSelect
-                    items={[
-                      ...statusOptions,
-                      ...(general?.bpm?.map((item, index) => ({
-                        id: index,
-                        value: item?.value,
-                        option: item?.label,
-                      })) || []),
-                    ]}
-                    label="Filter by BPM"
-                    value={bpm}
-                    onChange={setBpm}
-                  />
-                </div>
-                <div className="flex-shrink-0">
-                  <SiteSelect
-                    items={[
-                      ...statusOptions,
-                      ...(general?.genres?.map((item) => ({
-                        id: item?._id,
-                        value: item?._id,
-                        option: item?.name,
-                      })) || []),
-                    ]}
-                    label="Filter by Genre"
-                    value={genre}
-                    onChange={setGenre}
-                  />
-                </div>
+                {data?.data?.length > 0 ? (
+                  <>
+                    <div className="flex-grow-1">
+                      <SiteInput
+                        labelClass="d-block"
+                        label="Search"
+                        placeholder="Search here..."
+                        value={search}
+                        onChange={onChangeSearch}
+                      />
+                    </div>
+                    <div className="flex-grow-1">
+                      <SiteSelect
+                        items={[
+                          ...statusOptions,
+                          ...(general?.lengths?.map((item, index) => ({
+                            id: index,
+                            value: item?.value,
+                            option: item?.label,
+                          })) || []),
+                        ]}
+                        label="Filter by Length"
+                        value={length}
+                        onChange={setLength}
+                      />
+                    </div>
+                    <div className="flex-grow-1">
+                      <SiteSelect
+                        items={[
+                          ...statusOptions,
+                          ...(general?.bpm?.map((item, index) => ({
+                            id: index,
+                            value: item?.value,
+                            option: item?.label,
+                          })) || []),
+                        ]}
+                        label="Filter by BPM"
+                        value={bpm}
+                        onChange={setBpm}
+                      />
+                    </div>
+                    <div className="flex-grow-1">
+                      <SiteSelect
+                        items={[
+                          ...statusOptions,
+                          ...(general?.genres?.map((item) => ({
+                            id: item?._id,
+                            value: item?._id,
+                            option: item?.name,
+                          })) || []),
+                        ]}
+                        label="Filter by Genre"
+                        value={genre}
+                        onChange={setGenre}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div></div>
+                )}
               </div>
 
               {/* Song Cards */}
@@ -144,17 +150,20 @@ const BeatMixedSet = () => {
                   >
                     Prev
                   </button>
-                  <span>Page {page} of {totalPages}</span>
+                  <span>
+                    Page {page} of {totalPages}
+                  </span>
                   <button
                     className="pagination-btn"
-                    onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                    onClick={() =>
+                      setPage((prev) => Math.min(prev + 1, totalPages))
+                    }
                     disabled={page === totalPages}
                   >
                     Next
                   </button>
                 </div>
               )}
-
             </div>
           </div>
         </div>

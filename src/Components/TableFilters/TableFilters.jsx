@@ -30,7 +30,7 @@ const TableFilters = ({ fromDate, toDate, status, onChange }) => {
             />
           </div>
         </div>
-        <div className="flex-shrink-0">
+        <div className="flex-grow-1">
           <SiteSelect
             items={statusOptions}
             label="Filter by Status"
