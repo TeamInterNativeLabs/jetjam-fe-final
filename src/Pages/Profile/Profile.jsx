@@ -38,7 +38,7 @@ const Profile = () => {
                       Subscription Status
                     </label>
                     <p className="l-grey-text mb-0">
-                      {user?.active ? "Active" : "Inactive"}{" "}
+                      {user?.subscription?.active ? "Active" : "Inactive"}{" "}
                       <Link to={"/subscription-plans"}>
                         (View Subscriptions)
                       </Link>

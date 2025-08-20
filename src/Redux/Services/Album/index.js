@@ -19,10 +19,13 @@ export const albumApiService = createApi({
   }),
   endpoints: (builder) => ({
     getAlbums: builder.query({
-      query: (data) => ({
-        url: data?._id ? `get/${data?._id}` : "get",
-        params: data?._id ? {} : data,
-      }),
+      query: (data) => {
+        console.log(data, "wow");
+        return {
+          url: data?._id ? `get/${data?._id}` : "get",
+          params: data?._id ? {} : data,
+        };
+      },
       keepUnusedDataFor: 0,
     }),
   }),

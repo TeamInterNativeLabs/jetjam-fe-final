@@ -4,7 +4,6 @@ import EmptyComponent from "../../Components/EmptyComponent";
 import { SiteSelect } from "../../Components/Input/select";
 import { UserLayout } from "../../Components/Layout";
 import Loader from "../../Components/Loader";
-import { useGetAlbumsQuery } from "../../Redux/Services/Album";
 import SongCard from "../Home/TrendingDanceAndFitness/SongCard";
 import "./index.css";
 import SiteInput from "../../Components/Input/input";
@@ -21,35 +20,69 @@ const statusOptions = [
 
 const BeatMixedSet = () => {
   const { state } = useLocation();
+  const { general } = useSelector((state) => state.generalSlice);
 
   const [genre, setGenre] = useState("");
   const [length, setLength] = useState("");
   const [bpm, setBpm] = useState("");
+  const [data, setData] = useState(null);
   const [search, debounceSearch, onChangeSearch] = useDebounce();
   const [page, setPage] = useState(1);
+  const [isLoading, setLoading] = useState(false);
   const maxcards = 10;
 
-  const { general } = useSelector((state) => state.generalSlice);
-
-  const { data, isFetching: isLoading } = useGetAlbumsQuery({
-    genre,
-    length,
-    bpm,
-    search: debounceSearch,
-    page,
-    rowsPerPage: maxcards,
-  });
-
+  // Set genre from router state
   useEffect(() => {
-    setGenre(state?.genre_id ?? "");
+    if (state?.genre_id) {
+      setGenre(state.genre_id);
+    }
   }, [state]);
 
+  // Reset page when filters/search change
   useEffect(() => {
     setPage(1);
   }, [genre, length, bpm, debounceSearch]);
 
+  // Fetch data on mount and when filters/search/page change
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        let url = `${import.meta.env.VITE_APP_BASE_URL}/album/get?`;
+        const params = new URLSearchParams();
+
+        if (genre) params.append("genre", genre);
+        if (length) params.append("length", length);
+        if (bpm) params.append("bpm", bpm);
+        if (debounceSearch) params.append("search", debounceSearch);
+        if (page) params.append("page", page);
+        params.append("rowsPerPage", maxcards);
+
+        const response = await fetch(`${url}${params.toString()}`);
+        const json = await response.json();
+
+        setData(json);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [genre, length, bpm, debounceSearch, page]);
+
   const totalCount = data?.total ?? 0;
   const totalPages = Math.ceil(totalCount / maxcards);
+  const songs = data?.data ?? [];
+
+  const isFilterDataReady =
+    general?.genres?.length && general?.bpm?.length && general?.lengths?.length;
+
+  if (!isFilterDataReady) {
+    return <Loader loading={true} />;
+  }
 
   return (
     <UserLayout>
@@ -62,72 +95,66 @@ const BeatMixedSet = () => {
 
               {/* Filters */}
               <div className="d-flex align-items-center justify-content-end gap-3 flex-wrap my-3">
-                {data?.data?.length > 0 ? (
-                  <>
-                    <div className="flex-grow-1">
-                      <SiteInput
-                        labelClass="d-block"
-                        label="Search"
-                        placeholder="Search here..."
-                        value={search}
-                        onChange={onChangeSearch}
-                      />
-                    </div>
-                    <div className="flex-grow-1">
-                      <SiteSelect
-                        items={[
-                          ...statusOptions,
-                          ...(general?.lengths?.map((item, index) => ({
-                            id: index,
-                            value: item?.value,
-                            option: item?.label,
-                          })) || []),
-                        ]}
-                        label="Filter by Length"
-                        value={length}
-                        onChange={setLength}
-                      />
-                    </div>
-                    <div className="flex-grow-1">
-                      <SiteSelect
-                        items={[
-                          ...statusOptions,
-                          ...(general?.bpm?.map((item, index) => ({
-                            id: index,
-                            value: item?.value,
-                            option: item?.label,
-                          })) || []),
-                        ]}
-                        label="Filter by BPM"
-                        value={bpm}
-                        onChange={setBpm}
-                      />
-                    </div>
-                    <div className="flex-grow-1">
-                      <SiteSelect
-                        items={[
-                          ...statusOptions,
-                          ...(general?.genres?.map((item) => ({
-                            id: item?._id,
-                            value: item?._id,
-                            option: item?.name,
-                          })) || []),
-                        ]}
-                        label="Filter by Genre"
-                        value={genre}
-                        onChange={setGenre}
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <div></div>
-                )}
+                <div className="flex-grow-1">
+                  <SiteInput
+                    labelClass="d-block"
+                    label="Search"
+                    placeholder="Search here..."
+                    value={search}
+                    onChange={onChangeSearch}
+                  />
+                </div>
+                <div className="flex-grow-1">
+                  <SiteSelect
+                    items={[
+                      ...statusOptions,
+                      ...general.lengths.map((item, index) => ({
+                        id: index,
+                        value: item?.value,
+                        option: item?.label,
+                      })),
+                    ]}
+                    label="Filter by Length"
+                    value={length}
+                    onChange={(e) => setLength(e?.target?.value ?? "")}
+                  />
+                </div>
+                <div className="flex-grow-1">
+                  <SiteSelect
+                    items={[
+                      ...statusOptions,
+                      ...general.bpm.map((item, index) => ({
+                        id: index,
+                        value: item?.value,
+                        option: item?.label,
+                      })),
+                    ]}
+                    label="Filter by BPM"
+                    value={bpm}
+                    onChange={(e) => setBpm(e?.target?.value ?? "")}
+                  />
+                </div>
+                <div className="flex-grow-1">
+                  <SiteSelect
+                    items={[
+                      ...statusOptions,
+                      ...general.genres.map((item) => ({
+                        id: item?._id,
+                        value: item?._id,
+                        option: item?.name,
+                      })),
+                    ]}
+                    label="Filter by Genre"
+                    value={genre}
+                    onChange={(e) => setGenre(e?.target?.value ?? "")}
+                  />
+                </div>
               </div>
 
               {/* Song Cards */}
               <div className="row">
-                {data?.data?.length > 0 ? (
-                  data.data.map((item) => (
+                {songs.length > 0 ? (
+                  songs.map((item) => (
                     <div
                       className="col-lg-3 col-sm-6 col-md-4 my-3"
                       key={item._id}
