@@ -21,6 +21,7 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.6.2",
     "bootstrap": "^5.2.3",
+    "framer-motion": "^12.23.12",
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",

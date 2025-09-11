@@ -1,0 +1,50 @@
+.bpm-title {
+  position: absolute;
+  top: 40%;
+  left: 82%;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: "Superion", sans-serif;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 1px rgb(60, 191, 243);
+  /* text-shadow: 0 0 30px #000; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: rotate(-30deg);
+  z-index: 30;
+}
+
+.clock {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: "Superion", sans-serif;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 1px rgb(60, 191, 243);
+  /* text-shadow: 0 0 30px #000; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: rotate(-30deg);
+  z-index: 30;
+  left: 82%;
+  top: 67%;
+}
+
+.clock-low {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: "Superion", sans-serif;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 1px rgb(60, 191, 243);
+  /* text-shadow: 0 0 30px #000; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: rotate(-30deg);
+  z-index: 30;
+  left: 86%;
+  top: 67%;
+}

@@ -28,8 +28,30 @@ import check from "./images/check.png";
 import beatMixImg from "./images/beatmix-img.png";
 import artistImg from "./images/artist-img.png";
 import exclamation from "./images/exclamation.png";
+import album_cover2 from "./images/album-cover.png";
+import album_cover from "./images/cover-2.png";
+import price_tag from "./images/price-tag.png";
+import price_tag2 from "./images/price-tag-3.png";
+import bg_cover from "./images/bg-cover.jpg";
+import bg_cover2 from "./images/bg-cover2.jpg";
+import bg_cover3 from "./images/bg-cover2.jpg";
+import bpm from "./images/bpm.png";
+import content_bg from "./images/content-bg.jpg";
+import content_bg2 from "./images/content-bg2.jpg";
+import content_bg3 from "./images/content-bg3.jpg";
+import minutes from "./images/minutes.png";
 
 export {
+  content_bg,
+  minutes,
+  content_bg3,
+  content_bg2,
+  price_tag2,
+  bpm,
+  bg_cover2,
+  bg_cover,
+  album_cover2,
+  price_tag,
   logo,
   placeholder,
   siteVideoPoster,
@@ -38,6 +60,7 @@ export {
   bannerBottom,
   fitMixImg,
   jetText,
+  album_cover,
   barVisualizer,
   saturdayPartyImg1,
   saturdayPartyImg2,
