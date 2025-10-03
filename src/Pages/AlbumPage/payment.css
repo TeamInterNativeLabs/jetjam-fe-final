@@ -1,0 +1,172 @@
+.payment-screen {
+  border-radius: 20px;
+  /* box-shadow: 0 10px 30px rgba(4, 4, 4, 0.4); */
+  max-width: 900px;
+  width: 100%;
+  min-height: 800px;
+  /* overflow: hidden; */
+  position: relative;
+  background: linear-gradient(135deg, #888585e2 0%, #171616 100%);
+  z-index: 2;
+  /* display: flex; */
+  opacity: 0.9;
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  overflow-y: auto;
+}
+
+.payment-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.1;
+  z-index: -10;
+}
+
+.payment-button::-webkit-scrollbar {
+  display: none;
+}
+
+.payment-screen {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.payment-button {
+  width: 100%;
+  /* height: 40%; */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-button {
+  max-width: 50%;
+}
+/* Container styles */
+.album-container {
+  /* margin: 10px auto; */
+  padding: 20px;
+  /* max-width: 700px; */
+  /* background-color: #f7f9f9; */
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+/* Heading */
+.album-heading {
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 800;
+  color: #3cbff3;
+  -webkit-text-stroke: 1px black;
+  font-family: "Azonix", cursive !important; /* Make sure this font is imported */
+}
+
+/* Paragraph */
+/* .album-paragraph {
+  font-size: 20px;
+  font-weight: 200;
+  color: #fff;
+  line-height: 1;
+  font-family: "Inter", sans-serif !important;
+} */
+
+/* Warning message */
+.album-warning {
+  color: #ff1900;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.download-section {
+  display: grid;
+  row-gap: 20px;
+}
+
+/* Thank you message */
+.album-thanks {
+  font-size: 28px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1;
+  font-family: "Great Vibes", sans-serif;
+}
+
+.custom-paypal-form {
+  max-width: 800px;
+  height: 100%;
+  /* margin: 40px auto; */
+  /* padding: 30px; */
+  background: #120e0e;
+  border-radius: 10px;
+  opacity: 1;
+  padding: 10px 80px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+.timer-text {
+  font-size: 14px;
+  color: #c0392b;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.download-button {
+  padding: 12px 20px;
+  background: linear-gradient(rgb(63, 217, 255), rgb(101, 101, 255));
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.download-button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.custom-paypal-heading {
+  margin-bottom: 20px;
+  font-family: "Azonix", cursive !important;
+  text-align: center;
+  font-size: 24px;
+}
+
+.custom-paypal-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.custom-paypal-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.custom-paypal-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #0070ba;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-paypal-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

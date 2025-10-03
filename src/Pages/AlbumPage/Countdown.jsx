@@ -13,7 +13,11 @@ export default function Countdown({ max, type }) {
   }, []);
 
   return (
-    <motion.span className={type == "bpm" ? "bpm-title" : "clock"}>
+    <motion.span
+      className={
+        type == "bpm" ? "bpm-title" : max < 10 ? "clock-less" : "clock"
+      }
+    >
       {rounded}
     </motion.span>
   );
