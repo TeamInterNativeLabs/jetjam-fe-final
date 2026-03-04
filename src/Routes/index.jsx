@@ -15,6 +15,7 @@ import ChangePassword from "../Pages/Profile/ChangePassword";
 import EditProfile from "../Pages/Profile/EditProfile";
 import Profile from "../Pages/Profile/Profile";
 import SnpLive from "../Pages/SNPLive";
+import SnpVideos from "../Pages/SnpVideos";
 import SubscriptionLogs from "../Pages/SubscriptionLogs/SubsceriptionLogs";
 import SubscriptionPlan from "../Pages/SubscriptionPlan/SubscriptionPlan";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
@@ -101,6 +102,7 @@ export default function UserRoutes() {
         <Route path="/privacy-policy" element={<MusicLicenseDisclosure />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/snp-live" element={<SnpLive />} />
+        <Route path="/snp-videos" element={<SnpVideos />} />
       </Routes>
     </BrowserRouter>
   );

@@ -17,7 +17,7 @@ function JetJamsLiveStream() {
   };
 
   return (
-    <section className="pb-sm-5 pb-4" id="snp-live">
+    <section className="pb-sm-5 pb-4" id="listen-live">
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-xl-10 col-lg-11 col-12">

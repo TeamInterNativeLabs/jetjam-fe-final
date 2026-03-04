@@ -1,16 +1,9 @@
-import React, { useState } from "react";
-import { sampleVideo, siteVideoPoster } from "../../../assets";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 import "./HomeVideo.css";
-import { SiteModal } from "../../../Components/SiteModal";
-import ReactPlayer from "react-player/lazy";
+
+const YOUTUBE_VIDEO_ID = "eXGk9qRmVJ0";
 
 const HomeVideo = () => {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-
   return (
     <>
       <section className="raise-the-occasion pb-sm-5 pb-4">
@@ -19,9 +12,12 @@ const HomeVideo = () => {
             <div className="col-12 col-xl-10 col-lg-11 text-center">
               <div className="site-video mt-3">
                 <div className="player-wrapper">
-                  <ReactPlayer
-                    className="react-player"
-                    url="https://youtu.be/eXGk9qRmVJ0"
+                  <iframe
+                    className="react-player youtube-embed"
+                    src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
+                    title="YouTube video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                     width="100%"
                     height="100%"
                   />

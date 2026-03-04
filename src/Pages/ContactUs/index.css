@@ -6,5 +6,12 @@
     padding: 30px;
 }
 .profile-card .site-input{
-    max-width: 480px;
+    max-width: 100%;
+}
+.contact-form-single-column {
+    max-width: 100%;
+}
+.contact-form-single-column textarea.site-input {
+    width: 100%;
+    max-width: 100%;
 }

@@ -7,9 +7,10 @@ import { useSelector } from "react-redux";
 const App = () => {
   const { isPlaying } = useSelector((state) => state.playerSlice);
 
-  console.log = () => {};
-  console.warn = () => {};
-  console.error = () => {};
+  // Uncomment below to hide logs in production
+  // console.log = () => {};
+  // console.warn = () => {};
+  // console.error = () => {};
 
   return (
     <>

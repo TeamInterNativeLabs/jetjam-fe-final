@@ -5,10 +5,23 @@ import SiteButton from "../../Components/Button/button";
 import { UserLayout } from "../../Components/Layout";
 import "./index.css";
 import { Link } from "react-router-dom";
+import { useGetProfileQuery } from "../../Redux/Services/User";
+import { formatDate } from "../../Utils/helper";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.authSlice);
   const navigate = useNavigate();
+  useGetProfileQuery(undefined, { refetchOnFocus: true });
+
+  const sub = user?.subscription;
+  const isActive = sub?.active === true;
+  const isCanceled = !!(sub?.canceledAt || sub?.canceled);
+  const endDate = sub?.expiry || sub?.endDate;
+  const statusLabel = isActive
+    ? isCanceled
+      ? `Canceled (access until ${endDate ? formatDate(endDate) : "period end"})`
+      : "Active"
+    : "Inactive";
 
   return (
     <UserLayout>
@@ -38,10 +51,10 @@ const Profile = () => {
                       Subscription Status
                     </label>
                     <p className="l-grey-text mb-0">
-                      {user?.subscription?.active ? "Active" : "Inactive"}{" "}
-                      <Link to={"/subscription-plans"}>
-                        (View Subscriptions)
-                      </Link>
+                      {statusLabel}{" "}
+                      <Link to="/subscription-logs">(My Subscription)</Link>
+                      {" · "}
+                      <Link to="/subscription-plans">(View Plans)</Link>
                     </p>
                   </div>
                   {/* <div className="col-sm-4 my-3">

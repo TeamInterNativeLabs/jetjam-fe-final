@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import AudioPlayer from "react-modern-audio-player";
 import { useSelector } from "react-redux";
 import "./AudioPlayer.css";
@@ -6,7 +6,17 @@ import Editor from "./Editor";
 
 const CustomAudioPlayer = ({ editorNeeded }) => {
 
-    const { albums } = useSelector(state => state.playerSlice)
+    const { albums, track_id, isPlaying, playableAlbumIds } = useSelector(state => state.playerSlice);
+
+    const audioInitialState = useMemo(() => {
+        if (!track_id || !playableAlbumIds?.length) return undefined;
+        const index = playableAlbumIds.indexOf(track_id);
+        if (index === -1) return undefined;
+        return {
+            curPlayId: index + 1,
+            isPlaying: true
+        };
+    }, [track_id, playableAlbumIds]);
 
     const [progressType, setProgressType] = useState("bar");
     const [playerPlacement, setPlayerPlacement] = useState("bottom-left");
@@ -24,6 +34,7 @@ const CustomAudioPlayer = ({ editorNeeded }) => {
                     albums && albums.length > 0 &&
                     <AudioPlayer
                         playList={albums}
+                        audioInitialState={audioInitialState}
                         activeUI={{
                             ...activeUI,
                             progress: progressType

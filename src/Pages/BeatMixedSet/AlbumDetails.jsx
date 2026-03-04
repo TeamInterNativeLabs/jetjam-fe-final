@@ -16,22 +16,25 @@ const AlbumDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { id } = useParams();
-    const { isLoggedIn } = useSelector((state) => state.authSlice);
+    const { isLoggedIn, user } = useSelector((state) => state.authSlice);
     const { data, isLoading } = useGetAlbumsQuery({ _id: id });
     const currentDetails = data?.data;
     const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${currentDetails?.image
         }`;
     const { isPlaying, track_id } = useSelector((state) => state.playerSlice);
 
+    const hasActiveSubscription = !!user?.subscription?.active;
+    const isPlayable = data?.data?.playable === true || hasActiveSubscription;
+
     const handleChange = () => {
         if (!isLoggedIn) {
             navigate("/login");
             return;
-        } else if (!data?.data?.playable) {
+        }
+        if (!isPlayable) {
             navigate("/subscription-plans");
             return;
         }
-
         dispatch(play(id));
     };
 

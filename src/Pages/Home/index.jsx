@@ -31,6 +31,16 @@ export const Home = () => {
     { free: true },
     { refetchOnFocus: true, refetchOnMountOrArgChange: true }
   );
+  const freeDemosDeduped = React.useMemo(() => {
+    const list = free_albums?.data ?? [];
+    const seen = new Set();
+    return list.filter((item) => {
+      const key = item?._id ?? item?.id;
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [free_albums?.data]);
 
   useEffect(() => {
     if (location.hash) {
@@ -51,7 +61,7 @@ export const Home = () => {
     <UserLayout>
       <Banner data={genreStatsData?.data} />
       <ShadowDivider />
-      <BeatmixPlayStation data={free_albums?.data} />
+      <BeatmixPlayStation data={freeDemosDeduped} />
       <div id="fitmix-section">
         <FitMixMessage />
       </div>

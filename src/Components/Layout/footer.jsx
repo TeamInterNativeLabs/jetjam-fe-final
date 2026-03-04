@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 import { logo } from '../../assets'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faInstagram, faSoundcloud, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { useSelector } from 'react-redux'
-
 export const UserFooter = () => {
-
-    const { general } = useSelector(state => state.generalSlice)
 
     const current_year = new Date().getFullYear()
 
@@ -37,27 +33,15 @@ export const UserFooter = () => {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="col-md-3 my-3">
-                                    <p className="p-lg semi-bold mb-0">Genres</p>
-                                    <ul className='mt-3'>
-                                        {
-                                            general?.genres?.map(item => (
-                                                <li key={item._id} className='mt-2'>
-                                                    <Link to={'/beat-mixed-set'} state={{ genre_id: item._id }}>{item.name}</Link>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                </div>
-                                <div className="col-md-3 my-3">
+                                <div className="col-md-6 my-3">
                                     <p className="p-lg semi-bold mb-0">Quick Links</p>
                                     <ul className='mt-3'>
-                                        <li>
-                                            <Link to={'/privacy-policy'}>Privacy Policy</Link>
-                                        </li>
-                                        <li className='mt-2'>
-                                            <Link to={'/terms-and-conditions'}>Terms & Conditions</Link>
-                                        </li>
+                                        <li><Link to='/'>Home</Link></li>
+                                        <li className='mt-2'><Link to='/privacy-policy'>Privacy Policy</Link></li>
+                                        <li className='mt-2'><Link to='/terms-and-conditions'>Terms & Conditions</Link></li>
+                                        <li className='mt-2'><Link to='/snp-live'>SNP Live</Link></li>
+                                        <li className='mt-2'><Link to='/login'>Login</Link></li>
+                                        <li className='mt-2'><Link to='/contact-us'>Contact Us</Link></li>
                                     </ul>
                                 </div>
                             </div>

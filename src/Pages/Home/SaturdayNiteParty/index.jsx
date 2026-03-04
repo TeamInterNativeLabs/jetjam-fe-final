@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { placeholder } from "../../../assets";
 import { SiteModal } from "../../../Components/SiteModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useGetSnpVideosQuery } from "../../../Redux/Services/SnpVideo";
 import EmptyComponent from "../../../Components/EmptyComponent";
+import SiteButton from "../../../Components/Button/button";
+
+const HOMEPAGE_VIDEO_LIMIT = 2;
 
 const SaturdayNiteParty = () => {
   const [show, setShow] = useState(false);
@@ -16,16 +20,16 @@ const SaturdayNiteParty = () => {
     { refetchOnFocus: true }
   );
   const [active, setActive] = useState();
+  const homepageVideos = (data?.data ?? []).slice(0, HOMEPAGE_VIDEO_LIMIT);
 
   useEffect(() => {
     if (isSuccess && data?.data?.length > 0) {
-      setActive(data?.data[0]);
+      setActive(data.data[0]);
     }
   }, [data, isSuccess]);
 
-  // Fallback handler
   const handleImgError = (e) => {
-    e.target.src = placeholder; // fallback image
+    e.target.src = placeholder;
   };
 
   return (
@@ -39,10 +43,9 @@ const SaturdayNiteParty = () => {
               </h4>
               {data?.data?.length > 0 ? (
                 <div className="row">
-                  {/* Thumbnails Row */}
                   <div className="col-12">
                     <div className="row">
-                      {data?.data.map((ele) => (
+                      {homepageVideos.map((ele) => (
                         <div
                           className="col-6 my-3 cursor-pointer"
                           key={ele._id}
@@ -106,6 +109,11 @@ const SaturdayNiteParty = () => {
                       </div>
                     )}
                   </div>
+                  <div className="col-12 text-center mt-3">
+                    <Link to="/snp-videos">
+                      <SiteButton>View More</SiteButton>
+                    </Link>
+                  </div>
                 </div>
               ) : (
                 <div className="mt-4">
@@ -123,7 +131,7 @@ const SaturdayNiteParty = () => {
           poster={`${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${
             active?.thumbnail
           }`}
-          onError={(e) => (e.target.poster = siteVideoPoster)}
+          onError={handleImgError}
           controls
         >
           <source

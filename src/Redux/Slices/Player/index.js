@@ -5,7 +5,8 @@ let initialState = {
     isPlaying: false,
     currentTrack: null,
     track_id: null,
-    albums: []
+    albums: [],
+    playableAlbumIds: []
 }
 
 export const playerSlice = createSlice({
@@ -26,9 +27,12 @@ export const playerSlice = createSlice({
         setAlbums: (state, action) => {
             let tracks = action?.payload
             let albums_to_set = []
+            let ids = []
 
             if (tracks && tracks?.length > 0) {
-                albums_to_set = tracks.filter(item => item.playable).map((item, index) => ({
+                const playable = tracks.filter(item => item.playable)
+                ids = playable.map(item => item._id)
+                albums_to_set = playable.map((item, index) => ({
                     name: item.name,
                     write: "JetJams",
                     src: `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${item?.file_url}`,
@@ -37,6 +41,7 @@ export const playerSlice = createSlice({
             }
 
             state.albums = albums_to_set
+            state.playableAlbumIds = ids
         },
     }
 })

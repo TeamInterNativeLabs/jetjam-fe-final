@@ -37,8 +37,8 @@ const ContactUs = () => {
     }, [isSuccess])
 
     const onSubmit = useCallback((data) => {
-        submit(data)
-    }, [])
+        submit(data);
+    }, [submit]);
 
     return (
         <UserLayout>
@@ -52,8 +52,8 @@ const ContactUs = () => {
                                 <h5 className="inter semi-bold">Contact Us</h5>
                                 <hr />
                                 <Form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="row">
-                                        <div className="col-md-6 my-3">
+                                    <div className="contact-form-single-column">
+                                        <div className="my-3">
                                             <Controller
                                                 control={control}
                                                 name='name'
@@ -71,7 +71,7 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="col-md-6 my-3">
+                                        <div className="my-3">
                                             <Controller
                                                 control={control}
                                                 name='email'
@@ -95,7 +95,7 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="col-md-6 my-3">
+                                        <div className="my-3">
                                             <Controller
                                                 control={control}
                                                 name='subject'
@@ -113,21 +113,28 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="col-md-6 my-3">
+                                        <div className="my-3">
                                             <Controller
                                                 control={control}
                                                 name='message'
                                                 rules={{ required: "Message is required" }}
                                                 render={({ field }) => (
-                                                    <SiteInput
-                                                        label="Message"
-                                                        labelClass="mb-2"
-                                                        className="p-sm"
-                                                        requiredStar
-                                                        placeholder="Enter Message"
-                                                        error={errors?.message?.message}
-                                                        {...field}
-                                                    />
+                                                    <div className="d-flex flex-column w-100">
+                                                        <label className="site-label mb-1">
+                                                            Message <span className="red-text">*</span>
+                                                        </label>
+                                                        <Form.Control
+                                                            as="textarea"
+                                                            rows={6}
+                                                            placeholder="Enter your message"
+                                                            className="site-input"
+                                                            style={{ minHeight: '160px', resize: 'vertical' }}
+                                                            {...field}
+                                                        />
+                                                        {errors?.message?.message && (
+                                                            <label className="site-error mt-1">{errors.message.message}</label>
+                                                        )}
+                                                    </div>
                                                 )}
                                             />
                                         </div>

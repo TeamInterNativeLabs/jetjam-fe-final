@@ -20,11 +20,14 @@ export const AuthSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(authApiService.endpoints.login.matchFulfilled, (state, action) => {
-            let { success, token, data } = action.payload
-            if (success) {
-                state.isLoggedIn = success
+            const payload = action.payload
+            const success = payload?.success
+            const token = payload?.token ?? payload?.access_token
+            const data = payload?.data
+            if (success && token) {
+                state.isLoggedIn = true
                 state.token = token
-                state.user = data
+                state.user = data ?? state.user
             } else {
                 state.isLoggedIn = false
                 state.token = null
@@ -37,7 +40,13 @@ export const AuthSlice = createSlice({
             if (success && state.user._id === data._id) {
                 state.user = data
             }
-
+        })
+        builder.addMatcher(userApiService.endpoints.getProfile.matchFulfilled, (state, action) => {
+            const payload = action.payload
+            const data = payload?.data ?? payload
+            if (data && state.token) {
+                state.user = data
+            }
         })
     }
 })

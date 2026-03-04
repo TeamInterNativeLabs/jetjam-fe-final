@@ -15,6 +15,9 @@ export const userApiService = createApi({
         }
     }),
     endpoints: (builder) => ({
+        getProfile: builder.query({
+            query: () => 'my-profile'
+        }),
         register: builder.mutation({
             query: (payload) => ({
                 url: 'create',
@@ -40,6 +43,7 @@ export const userApiService = createApi({
 })
 
 export const {
+    useGetProfileQuery,
     useRegisterMutation,
     useChangePasswordMutation,
     useUpdateProfileMutation

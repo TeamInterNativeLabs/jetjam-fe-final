@@ -9,11 +9,9 @@ const BeatmixPlayStation = ({ data }) => {
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-xl-10 col-lg-11 col-12">
-            <div className="row">
-              <div className="col-xl-8 my-3"></div>
-              <h4 className="text-center">Demo Play Station</h4>
-              <SongSets title={""} songSets={data} />
-              {/* <BeatmixSlider data={data} /> */}
+            <h4 className="text-center mb-3">Demo Play Station</h4>
+            <div className="demo-play-station-row">
+              <SongSets title="" songSets={data} />
             </div>
           </div>
         </div>

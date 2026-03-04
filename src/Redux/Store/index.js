@@ -28,8 +28,13 @@ import PlayerSlice from "../Slices/Player"
 const apiErrorHandler = (store) => (next) => (action) => {
     if (action.type.endsWith('/rejected')) {
         if (action && action.payload) {
-            let { data, status } = action.payload
-            let { message } = data
+            const { data, status } = action.payload || {}
+            const message =
+                data?.message ||
+                (action.payload?.error && String(action.payload.error)) ||
+                (action.payload?.message && String(action.payload.message)) ||
+                (action.payload?.status === 'FETCH_ERROR' && 'Unable to reach server. Is the backend running?') ||
+                'Something went wrong.'
 
             toast.error(message)
 
