@@ -20,7 +20,6 @@ export const albumApiService = createApi({
   endpoints: (builder) => ({
     getAlbums: builder.query({
       query: (data) => {
-        console.log(data, "wow");
         return {
           url: data?._id ? `get/${data?._id}` : "get",
           params: data?._id ? {} : data,

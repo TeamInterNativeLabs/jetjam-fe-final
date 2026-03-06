@@ -44,14 +44,14 @@ export const UserHeader = (props) => {
                                 </Navbar.Toggle>
                                 <Navbar.Collapse id="navbarScroll">
                                     <Nav className="ms-auto align-items-xl-center gap-xl-5 align-items-start">
-                                        <Link to={'/'} className={location.pathname === "/" && 'active-route'}>Home</Link>
-                                        <Link to={'/beat-mixed-set'} className={location.pathname === "/beat-mixed-set" && 'active-route'}>All Sets</Link>
+                                        <Link to={'/'} className={location.pathname === "/" ? 'active-route' : undefined}>Home</Link>
+                                        <Link to={'/beat-mixed-set'} className={location.pathname === "/beat-mixed-set" ? 'active-route' : undefined}>All Sets</Link>
                                         <a href='#fitmix-section' >Fit-Mix Message </a>
-                                        <Link to={'/snp-live'} className={location.pathname === "/snp-live" && 'active-route'}>SNP Live</Link>
-                                        <Link to={'/contact-us'} className={location.pathname === "/contact-us" && 'active-route'}>Contact Us</Link>
+                                        <Link to={'/snp-live'} className={location.pathname === "/snp-live" ? 'active-route' : undefined}>SNP Live</Link>
+                                        <Link to={'/contact-us'} className={location.pathname === "/contact-us" ? 'active-route' : undefined}>Contact Us</Link>
                                         {isLoggedIn ? (
                                             <>
-                                                <Link to={'/subscription-logs'} className={location.pathname === "/subscription-logs" && 'active-route'}>My subscription</Link>
+                                                <Link to={'/subscription-logs'} className={location.pathname === "/subscription-logs" ? 'active-route' : undefined}>My subscription</Link>
                                                 <Dropdown>
                                                     <Dropdown.Toggle className='transparent-btn' id="dropdown-basic">
                                                         <svg width="24" height="27" viewBox="0 0 32 39" fill="none" xmlns="http://www.w3.org/2000/svg">
