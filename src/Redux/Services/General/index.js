@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { getApiBaseUrl } from '../../../Config/env'
 
-const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/general/`
+const baseUrl = `${getApiBaseUrl()}/general/`
 
 export const generalApiService = createApi({
     reducerPath: 'generalApi',

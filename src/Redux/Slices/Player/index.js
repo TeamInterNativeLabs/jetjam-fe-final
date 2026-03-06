@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { albumApiService } from "../../Services/Album";
+import { imageUrl } from "../../../Config/env";
 
 let initialState = {
     isPlaying: false,
@@ -35,7 +36,7 @@ export const playerSlice = createSlice({
                 albums_to_set = playable.map((item, index) => ({
                     name: item.name,
                     write: "JetJams",
-                    src: `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${item?.file_url}`,
+                    src: imageUrl(item?.file_url),
                     id: index + 1
                 }))
             }

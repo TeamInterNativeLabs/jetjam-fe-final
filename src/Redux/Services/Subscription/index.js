@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { getApiBaseUrl } from '../../../Config/env'
 
-const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/subscription/`
+const baseUrl = `${getApiBaseUrl()}/subscription/`
 
 // Subscription API (aligned with backend):
 // - GET  /subscription/get   -> { data: [{ _id, active, createdAt, expiry, package: { title, price }, method_subscription_id?, canceledAt? }] }

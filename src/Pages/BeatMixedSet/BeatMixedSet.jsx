@@ -9,6 +9,7 @@ import "./index.css";
 import SiteInput from "../../Components/Input/input";
 import useDebounce from "../../Hooks/useDebounce";
 import { useLocation } from "react-router";
+import { getApiBaseUrl } from "../../Config/env";
 
 const statusOptions = [
   {
@@ -49,7 +50,7 @@ const BeatMixedSet = () => {
       try {
         setLoading(true);
 
-        let url = `${import.meta.env.VITE_APP_BASE_URL}/album/get?`;
+        let url = `${getApiBaseUrl()}/album/get?`;
         const params = new URLSearchParams();
 
         if (genre) params.append("genre", genre);

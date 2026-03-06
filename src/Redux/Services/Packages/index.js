@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { getApiBaseUrl } from '../../../Config/env'
 
-const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/package/`
+const baseUrl = `${getApiBaseUrl()}/package/`
 
 export const packageApiService = createApi({
     reducerPath: 'packageApi',

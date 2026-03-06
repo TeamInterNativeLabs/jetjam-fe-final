@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { queryParams } from "../../../Utils/helper";
+import { getApiBaseUrl } from "../../../Config/env";
 
-const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/album/`;
+const baseUrl = `${getApiBaseUrl()}/album/`;
 
 export const albumApiService = createApi({
   reducerPath: "albumApi",

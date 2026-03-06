@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { getApiBaseUrl } from '../../../Config/env'
 
-const baseUrl = `${import.meta.env.VITE_APP_BASE_URL}/snp-video/`
+const baseUrl = `${getApiBaseUrl()}/snp-video/`
 
 export const snpvideoApiService = createApi({
     reducerPath: 'snpvideoApi',

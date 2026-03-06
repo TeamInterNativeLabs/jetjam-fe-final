@@ -4,6 +4,8 @@ import { beatmixPlayStationData } from "../../../Config/Data";
 import CustomAudioPlayer from "./AudioPlayer/AudioPlayer";
 import { formatDate, formatSecondsToString } from "../../../Utils/helper";
 import { useSelector } from "react-redux";
+import { imageUrl } from "../../../Config/env";
+import { placeholder } from "../../../assets";
 
 const settings = {
   slidesToShow: 4,
@@ -35,18 +37,20 @@ const settings = {
   ],
 };
 
+const onImgError = (e) => { e.target.onerror = null; e.target.src = placeholder; };
+
 const BeatMixImageCard = ({ image }) => {
-  const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${image}`;
+  const img = imageUrl(image) || placeholder;
 
   return (
     <div className="p-3" style={{ cursor: "pointer" }}>
-      <img src={img} alt="" className="img-fluid w-100 beat-mix-img" />
+      <img src={img} alt="" className="img-fluid w-100 beat-mix-img" onError={onImgError} />
     </div>
   );
 };
 
 const BeatMixCard = ({ data, enablePlayer }) => {
-  const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${data?.image}`;
+  const img = imageUrl(data?.image) || placeholder;
 
   return (
     <div>
@@ -57,6 +61,7 @@ const BeatMixCard = ({ data, enablePlayer }) => {
             alt=""
             className="img-fluid w-100"
             style={{ borderRadius: "20px", height: "500px" }}
+            onError={onImgError}
           />
         </div>
         <div className="col-lg-5 my-3">

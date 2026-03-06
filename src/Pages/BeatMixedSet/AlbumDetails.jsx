@@ -11,6 +11,8 @@ import { formatSecondsToHHMM } from "../../Utils/helper";
 import AlbumSongCard from "./AlbumSongCard";
 import "./index.css";
 import { play } from "../../Redux/Slices/Player";
+import { imageUrl } from "../../Config/env";
+import { placeholder } from "../../assets";
 
 const AlbumDetails = () => {
     const dispatch = useDispatch();
@@ -19,8 +21,7 @@ const AlbumDetails = () => {
     const { isLoggedIn, user } = useSelector((state) => state.authSlice);
     const { data, isLoading } = useGetAlbumsQuery({ _id: id });
     const currentDetails = data?.data;
-    const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${currentDetails?.image
-        }`;
+    const img = imageUrl(currentDetails?.image) || placeholder;
     const { isPlaying, track_id } = useSelector((state) => state.playerSlice);
 
     const hasActiveSubscription = !!user?.subscription?.active;
@@ -53,6 +54,7 @@ const AlbumDetails = () => {
                                                 src={img}
                                                 alt=""
                                                 className="img-fluid album-cover-img"
+                                                onError={(e) => { e.target.onerror = null; e.target.src = placeholder; }}
                                             />
                                         </div>
                                         <div className="flex-grow-1 pb-4">

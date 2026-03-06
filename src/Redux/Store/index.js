@@ -25,6 +25,20 @@ import AuthSlice, { logout } from "../Slices/Auth"
 import GeneralSlice from "../Slices/General"
 import PlayerSlice from "../Slices/Player"
 
+// Log API responses in console (set to true to debug)
+const LOG_API_RESPONSES = import.meta.env.DEV; // only in development, or set true to always log
+
+const apiResponseLogger = () => (next) => (action) => {
+    if (LOG_API_RESPONSES && action.type?.includes('Api/')) {
+        if (action.type.endsWith('/fulfilled')) {
+            console.log(`[API response] ${action.type}`, action.payload);
+        } else if (action.type.endsWith('/rejected')) {
+            console.log(`[API error] ${action.type}`, action.payload);
+        }
+    }
+    return next(action);
+};
+
 const apiErrorHandler = (store) => (next) => (action) => {
     if (action.type.endsWith('/rejected')) {
         if (action && action.payload) {
@@ -85,6 +99,7 @@ export const store = configureStore({
         .concat(snpvideoApiService.middleware)
         .concat(genreApiService.middleware)
         .concat(feedbackApiService.middleware)
+        .concat(apiResponseLogger)
         .concat(apiErrorHandler)
 })
 

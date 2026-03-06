@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { imageUrl } from '../../../../Config/env';
+import { placeholder } from '../../../../assets';
 
 const TrendingPlaylistCard = ({ data, handleChange }) => {
 
     const { _id, image, name, writer } = data
 
-    const img = `${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${image}`
+    const img = imageUrl(image) || placeholder
 
     const navigate = useNavigate()
 
@@ -20,7 +22,7 @@ const TrendingPlaylistCard = ({ data, handleChange }) => {
             <div className="playlist-card my-3 d-flex align-items-center justify-content-between gap-3">
                 <div className="flex-grow-1 d-flex align-items-center gap-3">
                     <div className="flex-shrink-0">
-                        <img src={img} alt="" className="img-fluid banner-playlist-img" />
+                        <img src={img} alt="" className="img-fluid banner-playlist-img" onError={(e) => { e.target.onerror = null; e.target.src = placeholder; }} />
                     </div>
                     <div className="flex-grow-1">
                         <p className="akira mb-0">{name}</p>

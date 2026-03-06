@@ -31,8 +31,8 @@ export const Banner = ({ data = [] }) => {
                                     }
                                     <div className="counters d-flex align-items-center gap-sm-5 gap-4 mt-4">
                                         {
-                                            data?.map(item => (
-                                                <Counter count={item?.albums} label={`Total ${item?.name} Sets`} />
+                                            data?.map((item, index) => (
+                                                <Counter key={item?._id || item?.name || index} count={item?.albums} label={`Total ${item?.name} Sets`} />
                                             ))
                                         }
                                     </div>

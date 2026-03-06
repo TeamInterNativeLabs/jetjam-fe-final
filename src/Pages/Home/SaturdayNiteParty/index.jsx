@@ -7,6 +7,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useGetSnpVideosQuery } from "../../../Redux/Services/SnpVideo";
 import EmptyComponent from "../../../Components/EmptyComponent";
 import SiteButton from "../../../Components/Button/button";
+import { imageUrl, getImageBaseUrl } from "../../../Config/env";
 
 const HOMEPAGE_VIDEO_LIMIT = 2;
 
@@ -65,9 +66,7 @@ const SaturdayNiteParty = () => {
                             }}
                           >
                             <img
-                              src={`${
-                                import.meta.env.VITE_APP_IMAGE_BASE_URL
-                              }/${ele?.thumbnail}`}
+                              src={imageUrl(ele?.thumbnail) || placeholder}
                               alt="Video thumbnail"
                               onError={handleImgError}
                               className="w-100 h-100"
@@ -91,9 +90,7 @@ const SaturdayNiteParty = () => {
                         }}
                       >
                         <img
-                          src={`${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${
-                            active?.thumbnail
-                          }`}
+                          src={imageUrl(active?.thumbnail) || placeholder}
                           alt="Active video preview"
                           onError={handleImgError}
                           className="w-100 img-fluid" // keep responsive
@@ -128,14 +125,12 @@ const SaturdayNiteParty = () => {
       {/* Video Modal */}
       <SiteModal show={show} className="video-modal" handleClose={handleClose}>
         <video
-          poster={`${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${
-            active?.thumbnail
-          }`}
+          poster={imageUrl(active?.thumbnail) || placeholder}
           onError={handleImgError}
           controls
         >
           <source
-            src={`${import.meta.env.VITE_APP_IMAGE_BASE_URL}/${active?.url}`}
+            src={active?.url?.startsWith('http') ? active.url : `${getImageBaseUrl().replace(/\/$/, '')}/${(active?.url || '').replace(/^\/+/, '')}`}
           />
         </video>
       </SiteModal>

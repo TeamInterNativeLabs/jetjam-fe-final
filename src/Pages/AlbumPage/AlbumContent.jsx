@@ -10,14 +10,16 @@ import {
   content_bg3,
   minutes,
   price_tag2,
+  placeholder,
 } from "../../assets";
+import { getApiBaseUrl, imageUrl } from "../../Config/env";
 
 export const AlbumContent = ({ setBuy, setAlbum }) => {
   const [albumData, setAlbumData] = useState();
   const getAlbumData = async () => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_APP_BASE_URL}/album/get-paid-album`
+        `${getApiBaseUrl()}/album/get-paid-album`
       );
 
       const json = await res.json(); // 👈 parse the JSON body
@@ -71,11 +73,7 @@ export const AlbumContent = ({ setBuy, setAlbum }) => {
           <div
             className="album-image"
             style={{
-              backgroundImage: `url(${
-                import.meta.env.VITE_APP_IMAGE_BASE_URL +
-                "/" +
-                albumData?.image?.replace(/\\/g, "/")
-              })`,
+              backgroundImage: `url(${imageUrl(albumData?.image?.replace(/\\/g, "/")) || placeholder})`,
             }}
           >
             <img className="price-tag" src={price_tag2}></img>

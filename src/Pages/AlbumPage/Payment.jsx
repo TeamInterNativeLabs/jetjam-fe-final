@@ -3,6 +3,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { motion } from "framer-motion";
 import CircularCountdown from "./CircularCountdown";
 import { content_bg3 } from "../../assets";
+import { getApiBaseUrl, imageUrl } from "../../Config/env";
 import "./payment.css";
 
 function PaypalPayment({ album }) {
@@ -59,7 +60,7 @@ function PaypalPayment({ album }) {
           <PayPalButtons
             createOrder={async () => {
               const response = await fetch(
-                `${import.meta.env.VITE_APP_BASE_URL}/album/create-album-order`,
+                `${getApiBaseUrl()}/album/create-album-order`,
                 {
                   method: "POST",
                   headers: {
@@ -76,9 +77,7 @@ function PaypalPayment({ album }) {
             }}
             onApprove={async (data) => {
               await fetch(
-                `${
-                  import.meta.env.VITE_APP_BASE_URL
-                }/album/capture-album-order`,
+                `${getApiBaseUrl()}/album/capture-album-order`,
                 {
                   method: "POST",
                   headers: {
@@ -110,12 +109,7 @@ function PaypalPayment({ album }) {
             className="download-button"
             disabled={timeLeft <= 0}
             onClick={() => {
-              window.open(
-                `${
-                  import.meta.env.VITE_APP_IMAGE_BASE_URL + "/" + album?.file
-                }`,
-                "_blank"
-              );
+              window.open(imageUrl(album?.file), "_blank");
             }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
