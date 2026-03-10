@@ -3,6 +3,33 @@
     backdrop-filter: blur(60px);
     border-radius: 28.344px;
     padding: 40px 30px;
+    height: 100%;
 }
+
+.subscription-cards-wrapper {
+    min-height: 400px;
+}
+
+.subscription-cards-wrapper .col-lg-6,
+.subscription-cards-wrapper .col-xl-4 {
+    display: flex;
+    align-items: stretch;
+}
+
 .features-list{list-style: url('../../../../assets/images/list-icon.png');}
 .features-list li{padding-left: 5px; padding-bottom: 5px;}
+
+/* Responsive adjustments for multiple cards */
+@media (max-width: 991px) {
+    .subscription-cards-wrapper .col-lg-6 {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .subscription-cards-wrapper .col-lg-6 {
+        max-width: 50%;
+        flex: 0 0 50%;
+    }
+}

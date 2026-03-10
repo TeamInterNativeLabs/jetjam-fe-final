@@ -7,7 +7,7 @@ const SubscriptionPlansListing = () => {
     return (
         <UserLayout>
             <div className='plans-subscriptions'>
-                <SubscriptionPlans />
+                <SubscriptionPlans showViewAll={false} />
             </div>
         </UserLayout>
     )
