@@ -1,22 +1,20 @@
-import React from "react";
 import Slider from "react-slick";
 import SongCard from "../SongCard";
 import { Link } from "react-router-dom";
 import EmptyComponent from "../../../../Components/EmptyComponent";
-import SliderComp from "../../../../Components/general/SliderComp";
 
 const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 4,
+  slidesToShow: 3, // Reduced from 4 to make cards larger
   slidesToScroll: 1,
   arrows: true,
   responsive: [
     {
       breakpoint: 1599, // Extra large screens
       settings: {
-        slidesToShow: 5, // Show more cards on very large screens
+        slidesToShow: 4, // Reduced from 5 to make cards larger
         slidesToScroll: 1,
         dots: true,
         infinite: true,
@@ -25,7 +23,7 @@ const sliderSettings = {
     {
       breakpoint: 1399,
       settings: {
-        slidesToShow: 4, // Standard desktop
+        slidesToShow: 3, // Standard desktop
         slidesToScroll: 1,
         dots: true,
         infinite: true,
@@ -34,7 +32,7 @@ const sliderSettings = {
     {
       breakpoint: 1199,
       settings: {
-        slidesToShow: 3, // Laptop
+        slidesToShow: 3, // Laptop - keep 3
         slidesToScroll: 1,
         dots: true,
         infinite: true,
@@ -58,11 +56,28 @@ const sliderSettings = {
 };
 
 function SongSets({ title, songSets }) {
+  // Adjust slider settings based on number of items
   const sliderSettingsAdjusted = {
     ...sliderSettings,
-    infinite: songSets?.length > 1,
+    infinite: songSets?.length > 1, // Only infinite if more than 1 item
     slidesToShow: Math.min(sliderSettings.slidesToShow, songSets?.length || 1),
+    arrows: songSets?.length > 1, // Only show arrows if more than 1 item
+    dots: songSets?.length > 1, // Only show dots if more than 1 item
   };
+
+  // Update responsive settings to respect the number of items
+  if (sliderSettingsAdjusted.responsive) {
+    sliderSettingsAdjusted.responsive = sliderSettingsAdjusted.responsive.map(breakpoint => ({
+      ...breakpoint,
+      settings: {
+        ...breakpoint.settings,
+        slidesToShow: Math.min(breakpoint.settings.slidesToShow, songSets?.length || 1),
+        infinite: songSets?.length > 1,
+        arrows: songSets?.length > 1,
+        dots: songSets?.length > 1,
+      }
+    }));
+  }
 
   return (
     <>
@@ -75,13 +90,21 @@ function SongSets({ title, songSets }) {
 
       <div className="px-4">
         {songSets?.length > 0 ? (
-          <Slider {...sliderSettingsAdjusted}>
-            {songSets.map((item, index) => (
-              <div key={item._id || item.id || index} className="pe-3">
-                <SongCard data={item} />
-              </div>
-            ))}
-          </Slider>
+          songSets.length === 1 ? (
+            // If only one item, show it without slider
+            <div className="single-demo-card" style={{ maxWidth: '350px', margin: '0 auto' }}>
+              <SongCard data={songSets[0]} />
+            </div>
+          ) : (
+            // If multiple items, use slider
+            <Slider {...sliderSettingsAdjusted}>
+              {songSets.map((item, index) => (
+                <div key={item._id || item.id || index} className="pe-3">
+                  <SongCard data={item} />
+                </div>
+              ))}
+            </Slider>
+          )
         ) : (
           <EmptyComponent />
         )}
