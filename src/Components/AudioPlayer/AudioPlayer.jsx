@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import AudioPlayer from "react-modern-audio-player";
 import { useSelector } from "react-redux";
 import "./AudioPlayer.css";
@@ -9,14 +9,24 @@ const CustomAudioPlayer = ({ editorNeeded }) => {
     const { albums, track_id, isPlaying, playableAlbumIds } = useSelector(state => state.playerSlice);
 
     const audioInitialState = useMemo(() => {
-        if (!track_id || !playableAlbumIds?.length) return undefined;
-        const index = playableAlbumIds.indexOf(track_id);
-        if (index === -1) return undefined;
+        if (!track_id || !albums?.length) return { isPlaying: true, curPlayId: 1 };
+        
+        if (playableAlbumIds?.length) {
+            const index = playableAlbumIds.indexOf(track_id);
+            if (index !== -1) {
+                return {
+                    curPlayId: index + 1,
+                    isPlaying: true
+                };
+            }
+        }
+        
+        // Default to first track and auto-play
         return {
-            curPlayId: index + 1,
+            curPlayId: 1,
             isPlaying: true
         };
-    }, [track_id, playableAlbumIds]);
+    }, [track_id, playableAlbumIds, albums]);
 
     const [progressType, setProgressType] = useState("bar");
     const [playerPlacement, setPlayerPlacement] = useState("bottom-left");

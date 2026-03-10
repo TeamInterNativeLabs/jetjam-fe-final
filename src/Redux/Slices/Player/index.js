@@ -16,7 +16,10 @@ export const playerSlice = createSlice({
     reducers: {
         play: (state, action) => {
             state.isPlaying = true;
-            state.track_id = action.payload
+            state.track_id = action.payload;
+            
+            // If no albums are set, this might be a single track play
+            // The component should handle setting up the album data
         },
         pause: (state) => {
             state.isPlaying = false;

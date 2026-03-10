@@ -11,7 +11,7 @@ import { useGetSubscriptionsQuery } from "../../Redux/Services/Subscription";
 import { formatSecondsToHHMM } from "../../Utils/helper";
 import AlbumSongCard from "./AlbumSongCard";
 import "./index.css";
-import { play } from "../../Redux/Slices/Player";
+import { play, setAlbums } from "../../Redux/Slices/Player";
 import { imageUrl } from "../../Config/env";
 import { placeholder } from "../../assets";
 
@@ -43,7 +43,20 @@ const AlbumDetails = () => {
             navigate("/subscription-plans");
             return;
         }
-        dispatch(play(id));
+        
+        // Set up the album for playback before dispatching play
+        if (currentDetails) {
+            const albumForPlayer = [{
+                name: currentDetails.name,
+                writer: currentDetails.singer || "Jet Jams",
+                src: imageUrl(currentDetails.file_url),
+                id: 1
+            }];
+            
+            // Set albums first, then play
+            dispatch(setAlbums([currentDetails]));
+            dispatch(play(id));
+        }
     };
 
     return (
