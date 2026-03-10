@@ -7,6 +7,7 @@ import CustomAudioPlayer from "../../Components/AudioPlayer/AudioPlayer";
 import { UserLayout } from "../../Components/Layout";
 import Loader from "../../Components/Loader";
 import { useGetAlbumsQuery } from "../../Redux/Services/Album";
+import { useGetSubscriptionsQuery } from "../../Redux/Services/Subscription";
 import { formatSecondsToHHMM } from "../../Utils/helper";
 import AlbumSongCard from "./AlbumSongCard";
 import "./index.css";
@@ -20,11 +21,17 @@ const AlbumDetails = () => {
     const { id } = useParams();
     const { isLoggedIn, user } = useSelector((state) => state.authSlice);
     const { data, isLoading } = useGetAlbumsQuery({ _id: id });
+    const { data: subscriptionData } = useGetSubscriptionsQuery({}, { skip: !isLoggedIn });
+    
     const currentDetails = data?.data;
     const img = imageUrl(currentDetails?.image) || placeholder;
     const { isPlaying, track_id } = useSelector((state) => state.playerSlice);
 
-    const hasActiveSubscription = !!user?.subscription?.active;
+    // Check for active subscription from subscription API
+    const activeSubscription = subscriptionData?.data?.find(sub => sub.active && !sub.canceledAt && !sub.canceled);
+    const hasActiveSubscription = !!activeSubscription;
+    
+    // Album is playable if it's marked as free OR user has active subscription
     const isPlayable = data?.data?.playable === true || hasActiveSubscription;
 
     const handleChange = () => {

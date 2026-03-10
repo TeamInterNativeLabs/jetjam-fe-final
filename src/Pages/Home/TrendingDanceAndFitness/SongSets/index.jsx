@@ -11,6 +11,7 @@ const sliderSettings = {
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 1,
+  arrows: true,
   responsive: [
     {
       breakpoint: 1399,
@@ -31,7 +32,7 @@ const sliderSettings = {
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 1,
         slidesToScroll: 1,
       },
     },
@@ -39,6 +40,12 @@ const sliderSettings = {
 };
 
 function SongSets({ title, songSets }) {
+  const sliderSettingsAdjusted = {
+    ...sliderSettings,
+    infinite: songSets?.length > 1,
+    slidesToShow: Math.min(sliderSettings.slidesToShow, songSets?.length || 1),
+  };
+
   return (
     <>
       <div className="d-flex mb-3 align-items-center justify-content-between gap-3 ">
@@ -50,9 +57,9 @@ function SongSets({ title, songSets }) {
 
       <div className="px-4">
         {songSets?.length > 0 ? (
-          <Slider {...sliderSettings}>
-            {songSets.map((item) => (
-              <div key={item._id} className="pe-3">
+          <Slider {...sliderSettingsAdjusted}>
+            {songSets.map((item, index) => (
+              <div key={item._id || item.id || index} className="pe-3">
                 <SongCard data={item} />
               </div>
             ))}

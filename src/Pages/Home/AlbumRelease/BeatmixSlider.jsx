@@ -4,6 +4,7 @@ import { beatmixPlayStationData } from "../../../Config/Data";
 import CustomAudioPlayer from "./AudioPlayer/AudioPlayer";
 import { formatDate, formatSecondsToString } from "../../../Utils/helper";
 import { useSelector } from "react-redux";
+import { useGetSubscriptionsQuery } from "../../../Redux/Services/Subscription";
 import { imageUrl } from "../../../Config/env";
 import { placeholder } from "../../../assets";
 
@@ -124,7 +125,12 @@ const BeatmixSlider = ({ data = [] }) => {
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
 
-  const { user } = useSelector((state) => state.authSlice);
+  const { user, isLoggedIn } = useSelector((state) => state.authSlice);
+  const { data: subscriptionData } = useGetSubscriptionsQuery({}, { skip: !isLoggedIn });
+
+  // Check for active subscription from subscription API
+  const activeSubscription = subscriptionData?.data?.find(sub => sub.active && !sub.canceledAt && !sub.canceled);
+  const hasActiveSubscription = !!activeSubscription;
 
   useEffect(() => {
     setNav1(sliderRef1);
@@ -141,7 +147,7 @@ const BeatmixSlider = ({ data = [] }) => {
             ref={(slider) => (sliderRef1 = slider)}
           >
             {data.map((item) => (
-              <BeatMixCard data={item} enablePlayer={user?.subscription} />
+              <BeatMixCard data={item} enablePlayer={hasActiveSubscription} />
             ))}
           </Slider>
         </div>

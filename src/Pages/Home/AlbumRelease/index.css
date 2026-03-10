@@ -38,3 +38,37 @@
   width: 100%;
   overflow: visible;
 }
+
+.demo-play-station-row {
+  width: 100%;
+}
+
+.demo-play-station-row .slick-slider {
+  overflow: visible;
+}
+
+.demo-play-station-row .slick-track {
+  display: flex !important;
+  align-items: center;
+}
+
+.demo-play-station-row .slick-slide {
+  height: auto;
+  display: flex !important;
+  align-items: stretch;
+  float: none !important;
+}
+
+.demo-play-station-row .slick-slide > div {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure horizontal layout for demo cards */
+.demo-play-station-row .slick-list {
+  overflow: hidden;
+}
+
+.demo-play-station-row .song-card {
+  margin-bottom: 0;
+}

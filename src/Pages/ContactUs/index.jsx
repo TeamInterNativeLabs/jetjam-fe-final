@@ -18,6 +18,8 @@ const initial = {
     message: '',
 }
 
+// Contact Us Form - sends feedback to backend API
+// Backend should email submissions to: johnny@jetjams.net
 const ContactUs = () => {
 
     const navigate = useNavigate();
