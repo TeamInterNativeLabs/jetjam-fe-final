@@ -16,9 +16,12 @@ const SubscriptionLogs = () => {
   const navigate = useNavigate();
   const { data, isLoading, refetch: refetchSubscriptions } = useGetSubscriptionsQuery(
     {},
-    { refetchOnFocus: true }
+    { refetchOnFocus: true, refetchOnMountOrArgChange: true }
   );
-  const { refetch: refetchProfile } = useGetProfileQuery(undefined, { refetchOnFocus: true });
+  const { refetch: refetchProfile } = useGetProfileQuery(undefined, { 
+    refetchOnFocus: true, 
+    refetchOnMountOrArgChange: true 
+  });
   const [cancelSubscription, { isLoading: isCancelling }] = useCancelSubscriptionMutation();
 
   const [filters, setFilters] = useState({

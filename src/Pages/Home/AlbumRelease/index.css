@@ -72,3 +72,78 @@
 .demo-play-station-row .song-card {
   margin-bottom: 0;
 }
+
+/* Center align when fewer cards */
+.demo-play-station-row .slick-track {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive sizing for Demo Play Station cards */
+.demo-play-station-row .song-card-img {
+  aspect-ratio: 1/1.2; /* Less tall on all screens */
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.demo-play-station-row .song-card:hover .song-card-img {
+  transform: scale(1.02);
+}
+
+/* Desktop/Laptop - Make cards smaller */
+@media screen and (min-width: 1200px) {
+  .demo-play-station-row .song-card {
+    max-width: 280px; /* Limit card width on large screens */
+    margin: 0 auto;
+  }
+  
+  .demo-play-station-row .song-card-img {
+    aspect-ratio: 1/1; /* Square aspect ratio on desktop */
+    max-height: 280px; /* Limit height */
+  }
+  
+  .demo-play-station-row .song-card-inner {
+    padding: 8px 12px; /* Reduce padding on desktop */
+  }
+  
+  .demo-play-station-row .song-card-inner p {
+    font-size: 0.9rem; /* Slightly smaller text */
+  }
+}
+
+/* Large Desktop - Even smaller cards */
+@media screen and (min-width: 1400px) {
+  .demo-play-station-row .song-card {
+    max-width: 250px;
+  }
+  
+  .demo-play-station-row .song-card-img {
+    max-height: 250px;
+  }
+}
+
+/* Extra Large Desktop - Show more cards with smaller size */
+@media screen and (min-width: 1600px) {
+  .demo-play-station-row .song-card {
+    max-width: 220px;
+  }
+  
+  .demo-play-station-row .song-card-img {
+    max-height: 220px;
+  }
+}
+
+/* Tablet */
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+  .demo-play-station-row .song-card-img {
+    aspect-ratio: 1/1.1;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .demo-play-station-row .song-card-img {
+    aspect-ratio: 1/1.3;
+  }
+}

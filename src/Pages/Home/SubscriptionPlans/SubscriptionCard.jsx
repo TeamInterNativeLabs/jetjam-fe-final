@@ -1,10 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 import SiteButton from '../../../Components/Button/button';
 
 const SubscriptionCard = ({ data, subscriptionPage, onPay }) => {
 
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.authSlice);
+
+  const handlePurchaseClick = () => {
+    if (!isLoggedIn) {
+      // Redirect to login if not logged in
+      navigate('/login');
+      return;
+    }
+    // If logged in, proceed to subscription page
+    navigate(`/subscription-plan/${data._id}`);
+  };
 
   if (data) {
     return (
@@ -22,7 +34,7 @@ const SubscriptionCard = ({ data, subscriptionPage, onPay }) => {
         {subscriptionPage ? (
           <SiteButton onClick={onPay} className="w-100 mt-4" style={{ justifySelf: 'end' }}>Purchase</SiteButton>
         ) : (
-          <SiteButton onClick={() => navigate(`/subscription-plan/${data._id}`)} className="w-100 mt-4" style={{ justifySelf: 'end' }}>View Details</SiteButton>
+          <SiteButton onClick={handlePurchaseClick} className="w-100 mt-4" style={{ justifySelf: 'end' }}>Purchase</SiteButton>
         )}
         <div id="paypal-button-container"></div>
       </div>

@@ -14,9 +14,27 @@ const sliderSettings = {
   arrows: true,
   responsive: [
     {
+      breakpoint: 1599, // Extra large screens
+      settings: {
+        slidesToShow: 5, // Show more cards on very large screens
+        slidesToScroll: 1,
+        dots: true,
+        infinite: true,
+      },
+    },
+    {
       breakpoint: 1399,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 4, // Standard desktop
+        slidesToScroll: 1,
+        dots: true,
+        infinite: true,
+      },
+    },
+    {
+      breakpoint: 1199,
+      settings: {
+        slidesToShow: 3, // Laptop
         slidesToScroll: 1,
         dots: true,
         infinite: true,
@@ -25,14 +43,14 @@ const sliderSettings = {
     {
       breakpoint: 992,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 2, // Tablet
         slidesToScroll: 1,
       },
     },
     {
       breakpoint: 600,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 1, // Mobile
         slidesToScroll: 1,
       },
     },

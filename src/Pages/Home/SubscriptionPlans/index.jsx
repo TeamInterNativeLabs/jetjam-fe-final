@@ -21,6 +21,9 @@ const SubscriptionPlans = ({ showViewAll }) => {
     return monthly ? [monthly] : list.slice(0, 1);
   }, [data?.data]);
 
+  // Only show "View All" if there are multiple plans available
+  const shouldShowViewAll = showViewAll && (data?.data?.length > 1);
+
   const onClickViewAll = () => {
     navigate("/subscription-plans");
   };
@@ -38,7 +41,7 @@ const SubscriptionPlans = ({ showViewAll }) => {
                 </div>
               ))}
             </div>
-            {showViewAll && (
+            {shouldShowViewAll && (
               <div className="d-flex justify-content-center align-items-center">
                 <SiteButton
                   className="align-self-center"
