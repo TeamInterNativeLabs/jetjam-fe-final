@@ -11,7 +11,7 @@ const BeatmixPlayStation = ({ data }) => {
           <div className="col-xl-10 col-lg-11 col-12">
             <h4 className="text-center mb-3">Demo Play Station</h4>
             <div className="demo-play-station-row">
-              <SongSets title="" songSets={data} />
+              <SongSets title="Free Demos" songSets={data} />
             </div>
           </div>
         </div>

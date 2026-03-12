@@ -6,6 +6,7 @@ const baseUrl = `${getApiBaseUrl()}/album/`;
 
 export const albumApiService = createApi({
   reducerPath: "albumApi",
+  tagTypes: ['Album'],
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
@@ -26,7 +27,8 @@ export const albumApiService = createApi({
           params: data?._id ? {} : data,
         };
       },
-      keepUnusedDataFor: 0,
+      providesTags: ['Album'],
+      keepUnusedDataFor: 300, // Keep cache for 5 minutes
     }),
   }),
 });

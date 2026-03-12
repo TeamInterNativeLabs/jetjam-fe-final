@@ -55,6 +55,37 @@
   position: relative;
 }
 
+.song-card-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.song-card:hover .song-card-play-btn {
+  opacity: 1;
+}
+
+.song-card-play-btn:hover {
+  background: rgba(249, 219, 5, 0.9);
+  border-color: #f9db05;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 .song-card-gradient {
   position: absolute;
   bottom: 0;

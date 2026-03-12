@@ -1,9 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getApiBaseUrl } from '../../../Config/env'
 
-// NOTE: This form sends data to the backend API at /feedback/create
-// The backend should be configured to send emails to: johnny@jetjams.net
-// Current backend API endpoint: ${getApiBaseUrl()}/feedback/create
+// IMPORTANT: Backend Configuration Required
+// The backend API endpoint /feedback/create should be configured to:
+// 1. Receive form submissions from this contact form
+// 2. Send email notifications to: johnny@jetjams.net
+// 3. Include all form fields: name, email, subject, message
+// 
+// Form data structure:
+// {
+//   name: string,
+//   email: string, 
+//   subject: string,
+//   message: string
+// }
 
 const baseUrl = `${getApiBaseUrl()}/feedback/`
 

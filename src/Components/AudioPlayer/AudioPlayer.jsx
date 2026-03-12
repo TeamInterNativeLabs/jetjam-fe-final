@@ -9,24 +9,24 @@ const CustomAudioPlayer = ({ editorNeeded }) => {
     const { albums, track_id, isPlaying, playableAlbumIds } = useSelector(state => state.playerSlice);
 
     const audioInitialState = useMemo(() => {
-        if (!track_id || !albums?.length) return { isPlaying: true, curPlayId: 1 };
+        if (!track_id || !albums?.length) return { isPlaying: false, curPlayId: 1 };
         
         if (playableAlbumIds?.length) {
             const index = playableAlbumIds.indexOf(track_id);
             if (index !== -1) {
                 return {
                     curPlayId: index + 1,
-                    isPlaying: true
+                    isPlaying: true // Always start playing when track is set
                 };
             }
         }
         
-        // Default to first track and auto-play
+        // Default to first track and auto-play when isPlaying is true
         return {
             curPlayId: 1,
-            isPlaying: true
+            isPlaying: isPlaying // Use the Redux state to determine if should play
         };
-    }, [track_id, playableAlbumIds, albums]);
+    }, [track_id, playableAlbumIds, albums, isPlaying]);
 
     const [progressType, setProgressType] = useState("bar");
     const [playerPlacement, setPlayerPlacement] = useState("bottom-left");

@@ -5,13 +5,66 @@
     border-radius: 15px;
     padding: 30px;
 }
+
 .profile-card .site-input{
     max-width: 100%;
-}
-.contact-form-single-column {
-    max-width: 100%;
-}
-.contact-form-single-column textarea.site-input {
     width: 100%;
+}
+
+/* Contact Form - Single Column Layout */
+.contact-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     max-width: 100%;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.form-field .site-input {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Large Message Textarea */
+.message-textarea {
+    min-height: 200px !important;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 12px 16px;
+}
+
+.message-textarea:focus {
+    border-color: #f9db05;
+    box-shadow: 0 0 0 0.2rem rgba(249, 219, 5, 0.25);
+}
+
+/* Submit Section */
+.form-submit-section {
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.submit-btn {
+    min-width: 150px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 20px;
+    }
+    
+    .contact-form-container {
+        gap: 20px;
+    }
+    
+    .message-textarea {
+        min-height: 150px !important;
+    }
 }

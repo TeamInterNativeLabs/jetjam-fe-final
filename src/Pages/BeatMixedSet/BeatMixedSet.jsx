@@ -63,9 +63,35 @@ const BeatMixedSet = () => {
         const response = await fetch(`${url}${params.toString()}`);
         const json = await response.json();
 
-        setData(json);
+        // Comprehensive deduplication to prevent showing the same demo multiple times
+        const deduplicatedData = {
+          ...json,
+          data: json?.data ? json.data.reduce((unique, item) => {
+            // Check if item already exists in unique array by _id, name, or other identifiers
+            const exists = unique.find(existingItem => 
+              existingItem._id === item._id || 
+              (existingItem.name === item.name && existingItem.length === item.length)
+            );
+            if (!exists && item._id) { // Ensure item has valid _id
+              unique.push(item);
+            }
+            return unique;
+          }, []) : []
+        };
+
+        // Debug logging to check for duplicates
+        if (json?.data && json.data.length !== deduplicatedData.data.length) {
+          console.log('Duplicates found and removed:', {
+            original: json.data.length,
+            deduplicated: deduplicatedData.data.length,
+            duplicateIds: json.data.map(item => item._id).filter((id, index, arr) => arr.indexOf(id) !== index)
+          });
+        }
+
+        setData(deduplicatedData);
       } catch (error) {
         console.error("Fetch error:", error);
+        setData({ data: [], total: 0 }); // Set empty data on error
       } finally {
         setLoading(false);
       }
@@ -76,7 +102,16 @@ const BeatMixedSet = () => {
 
   const totalCount = data?.total ?? 0;
   const totalPages = Math.ceil(totalCount / maxcards);
-  const songs = data?.data ?? [];
+  
+  // Memoize songs to prevent unnecessary re-renders
+  const songs = React.useMemo(() => {
+    const songList = data?.data ?? [];
+    // Additional client-side deduplication as a safety measure
+    const uniqueSongs = songList.filter((item, index, self) => 
+      index === self.findIndex(t => t._id === item._id)
+    );
+    return uniqueSongs;
+  }, [data?.data]);
 
   const isFilterDataReady =
     general?.genres?.length && general?.bpm?.length && general?.lengths?.length;
@@ -155,10 +190,10 @@ const BeatMixedSet = () => {
               {/* Song Cards */}
               <div className="row">
                 {songs.length > 0 ? (
-                  songs.map((item) => (
+                  songs.map((item, index) => (
                     <div
                       className="col-lg-3 col-sm-6 col-md-4 my-3"
-                      key={item._id}
+                      key={`${item._id}-${index}`}
                     >
                       <SongCard data={item} size="md" />
                     </div>

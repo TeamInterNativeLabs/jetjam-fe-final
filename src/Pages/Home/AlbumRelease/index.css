@@ -64,16 +64,20 @@
   height: 100%;
 }
 
-/* Single demo card styling */
-.demo-play-station-row .single-demo-card {
-  display: flex;
-  justify-content: center;
+/* Single demo card styling - horizontal layout */
+.demo-play-station-row .single-demo-card,
+.demo-play-station-row .d-flex {
+  display: flex !important;
+  justify-content: flex-start !important;
   align-items: center;
+  width: 100%;
 }
 
-.demo-play-station-row .single-demo-card .song-card {
+.demo-play-station-row .single-demo-card .song-card,
+.demo-play-station-row .d-flex .song-card {
   min-width: 250px;
   max-width: 350px;
+  margin-right: 20px; /* Add spacing for horizontal layout */
 }
 
 /* Ensure horizontal layout for demo cards */

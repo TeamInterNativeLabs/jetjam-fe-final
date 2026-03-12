@@ -81,19 +81,23 @@ function SongSets({ title, songSets }) {
 
   return (
     <>
-      <div className="d-flex mb-3 align-items-center justify-content-between gap-3 ">
-        <h4 className="mb-0">{title}</h4>
-        <Link to="/beat-mixed-set" className="l-grey-text">
-          See All
-        </Link>
-      </div>
+      {title && (
+        <div className="d-flex mb-3 align-items-center justify-content-between gap-3 ">
+          <h4 className="mb-0">{title}</h4>
+          <Link to="/beat-mixed-set" className="l-grey-text">
+            See All
+          </Link>
+        </div>
+      )}
 
       <div className="px-4">
         {songSets?.length > 0 ? (
           songSets.length === 1 ? (
-            // If only one item, show it without slider
-            <div className="single-demo-card" style={{ maxWidth: '350px', margin: '0 auto' }}>
-              <SongCard data={songSets[0]} />
+            // If only one item, show it in a horizontal layout container
+            <div className="d-flex justify-content-start align-items-center" style={{ minHeight: '300px' }}>
+              <div style={{ maxWidth: '350px', minWidth: '250px' }}>
+                <SongCard data={songSets[0]} />
+              </div>
             </div>
           ) : (
             // If multiple items, use slider

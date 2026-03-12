@@ -54,8 +54,8 @@ const ContactUs = () => {
                                 <h5 className="inter semi-bold">Contact Us</h5>
                                 <hr />
                                 <Form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="contact-form-single-column">
-                                        <div className="my-3">
+                                    <div className="contact-form-container">
+                                        <div className="form-field">
                                             <Controller
                                                 control={control}
                                                 name='name'
@@ -64,7 +64,7 @@ const ContactUs = () => {
                                                     <SiteInput
                                                         label="Full Name"
                                                         labelClass="w-100 mb-2"
-                                                        className="p-sm"
+                                                        className="p-sm w-100"
                                                         requiredStar
                                                         placeholder="Enter Full Name"
                                                         error={errors?.name?.message}
@@ -73,7 +73,8 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="my-3">
+                                        
+                                        <div className="form-field">
                                             <Controller
                                                 control={control}
                                                 name='email'
@@ -88,7 +89,7 @@ const ContactUs = () => {
                                                     <SiteInput
                                                         label="Email"
                                                         labelClass="w-100 mb-2"
-                                                        className="p-sm"
+                                                        className="p-sm w-100"
                                                         requiredStar
                                                         placeholder="Enter Email"
                                                         error={errors?.email?.message}
@@ -97,7 +98,8 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="my-3">
+                                        
+                                        <div className="form-field">
                                             <Controller
                                                 control={control}
                                                 name='subject'
@@ -105,8 +107,8 @@ const ContactUs = () => {
                                                 render={({ field }) => (
                                                     <SiteInput
                                                         label="Subject"
-                                                        labelClass="mb-2"
-                                                        className="p-sm"
+                                                        labelClass="w-100 mb-2"
+                                                        className="p-sm w-100"
                                                         requiredStar
                                                         placeholder="Enter Subject"
                                                         error={errors?.subject?.message}
@@ -115,22 +117,22 @@ const ContactUs = () => {
                                                 )}
                                             />
                                         </div>
-                                        <div className="my-3">
+                                        
+                                        <div className="form-field">
                                             <Controller
                                                 control={control}
                                                 name='message'
                                                 rules={{ required: "Message is required" }}
                                                 render={({ field }) => (
                                                     <div className="d-flex flex-column w-100">
-                                                        <label className="site-label mb-1">
+                                                        <label className="site-label mb-2">
                                                             Message <span className="red-text">*</span>
                                                         </label>
                                                         <Form.Control
                                                             as="textarea"
-                                                            rows={6}
-                                                            placeholder="Enter your message"
-                                                            className="site-input"
-                                                            style={{ minHeight: '160px', resize: 'vertical' }}
+                                                            rows={8}
+                                                            placeholder="Enter your message here..."
+                                                            className="site-input message-textarea"
                                                             {...field}
                                                         />
                                                         {errors?.message?.message && (
@@ -141,8 +143,11 @@ const ContactUs = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="d-flex align-items-center mt-4 gap-3 flex-wrap">
-                                        <SiteButton type="submit">Submit</SiteButton>
+                                    
+                                    <div className="form-submit-section">
+                                        <SiteButton type="submit" className="submit-btn">
+                                            Submit Message
+                                        </SiteButton>
                                     </div>
                                 </Form>
                             </div>
