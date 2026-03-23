@@ -24,6 +24,7 @@ import PrivateRoute from "./PrivateRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import SubscriptionPlansListing from "../Pages/SubscriptionPlansListing";
 import AlbumPage from "../Pages/AlbumPage";
+import SubscriptionConfirm from "../Pages/SubscriptionConfirm";
 
 export default function UserRoutes() {
   const {} = useGetDataQuery({}, { refetchOnFocus: true });
@@ -66,6 +67,14 @@ export default function UserRoutes() {
           element={<SubscriptionPlansListing />}
         />
         <Route path="/subscription-plan/:id" element={<SubscriptionPlan />} />
+        <Route
+          path="/subscription-confirm"
+          element={
+            <PrivateRoute>
+              <SubscriptionConfirm />
+            </PrivateRoute>
+          }
+        />
         <Route path="/payment/:id" element={<Payment />} />
         <Route
           path="/subscription-logs"

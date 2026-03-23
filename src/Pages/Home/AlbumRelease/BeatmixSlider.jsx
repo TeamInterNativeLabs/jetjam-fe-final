@@ -128,8 +128,12 @@ const BeatmixSlider = ({ data = [] }) => {
   const { user, isLoggedIn } = useSelector((state) => state.authSlice);
   const { data: subscriptionData } = useGetSubscriptionsQuery({}, { skip: !isLoggedIn });
 
-  // Check for active subscription from subscription API
-  const activeSubscription = subscriptionData?.data?.find(sub => sub.active && !sub.canceledAt && !sub.canceled);
+  // Check for active subscription — canceled ones still grant access until expiry
+  const activeSubscription = subscriptionData?.data?.find(sub => {
+    if (!sub.active) return false;
+    if (sub.canceledAt || sub.canceled) return new Date(sub.expiry) > new Date();
+    return true;
+  });
   const hasActiveSubscription = !!activeSubscription;
 
   useEffect(() => {
