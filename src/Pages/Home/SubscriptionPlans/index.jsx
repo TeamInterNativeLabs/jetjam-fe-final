@@ -6,41 +6,21 @@ import SiteButton from "../../../Components/Button/button";
 import { useNavigate } from "react-router";
 
 // forPublic: true → backend returns subscription plans for customers
-// TESTING: Currently showing all monthly plans including the $1 test plan
 const SubscriptionPlans = ({ showViewAll }) => {
-  // TESTING: Get all packages to see your $1 test plan
+  // Use forPublic=true to get only public-facing plans
   const { data } = useGetPackagesQuery(
-    showViewAll ? { page: 1, rowsPerPage: 10 } : {},
+    { forPublic: true },
     { refetchOnFocus: true }
   );
   const navigate = useNavigate();
 
   const singlePlan = React.useMemo(() => {
     const list = data?.data ?? [];
-    
-    // Debug: Log what we're getting from the API
-    console.log('All packages from API:', list);
-    console.log('Number of packages:', list.length);
-    
-    // TESTING: Show ALL packages to ensure we see your $1 test plan
-    console.log('Showing all packages for testing');
-    
-    return list; // Show everything for now
-    
-    // For testing: show all available plans instead of filtering for $9.99 only
-    // const monthlyPlans = list.filter(p => String(p?.duration ?? "").toLowerCase().includes("month"));
-    // console.log('Filtered monthly plans:', monthlyPlans);
-    // return monthlyPlans;
-    
-    // Original logic (commented out for testing):
-    // const monthly = list.find(
-    //   (p) => (Number(p?.price) === 9.99 || p?.price === "9.99") && String(p?.duration ?? "").toLowerCase().includes("month")
-    // );
-    // return monthly ? [monthly] : list.slice(0, 1);
+    // Show all monthly plans returned by the backend (forPublic filters to monthly plans)
+    return list;
   }, [data?.data]);
 
-  // Only show "View All" if there are more plans than what we're currently showing
-  const shouldShowViewAll = showViewAll && (data?.data?.length > singlePlan?.length);
+  const shouldShowViewAll = showViewAll && false; // forPublic already returns the right set
 
   const onClickViewAll = () => {
     navigate("/subscription-plans");
