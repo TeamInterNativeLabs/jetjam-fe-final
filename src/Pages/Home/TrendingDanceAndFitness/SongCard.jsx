@@ -21,8 +21,14 @@ const SongCard = ({ data, size = "sm" }) => {
   const img = imageUrl(image) || placeholder;
   const isCurrentlyPlaying = isPlaying && track_id === _id;
 
-  // Check for active subscription
-  const activeSubscription = subscriptionData?.data?.find(sub => sub.active && !sub.canceledAt && !sub.canceled);
+  // Check for active subscription — canceled ones still grant access until expiry
+  const activeSubscription = subscriptionData?.data?.find(sub => {
+    if (!sub.active) return false;
+    if (sub.canceledAt || sub.canceled) {
+      return new Date(sub.expiry) > new Date(); // still within paid period
+    }
+    return true;
+  });
   const hasActiveSubscription = !!activeSubscription;
   
   // Album is playable if it's marked as free OR user has active subscription

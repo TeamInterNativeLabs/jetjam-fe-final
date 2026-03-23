@@ -20,6 +20,13 @@ export const subscriptionApiService = createApi({
         getSubscriptions: builder.query({
             query: () => ({ url: 'get' })
         }),
+        confirmSubscription: builder.mutation({
+            query: (subscriptionId) => ({
+                url: 'confirm',
+                method: 'POST',
+                body: { subscriptionId }
+            })
+        }),
         cancelSubscription: builder.mutation({
             query: (payload) => ({
                 url: 'cancel',
@@ -32,5 +39,6 @@ export const subscriptionApiService = createApi({
 
 export const {
     useGetSubscriptionsQuery,
+    useConfirmSubscriptionMutation,
     useCancelSubscriptionMutation,
 } = subscriptionApiService

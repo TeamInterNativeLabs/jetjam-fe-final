@@ -27,8 +27,15 @@ const AlbumDetails = () => {
     const img = imageUrl(currentDetails?.image) || placeholder;
     const { isPlaying, track_id } = useSelector((state) => state.playerSlice);
 
-    // Check for active subscription from subscription API
-    const activeSubscription = subscriptionData?.data?.find(sub => sub.active && !sub.canceledAt && !sub.canceled);
+    // Check for active subscription — includes canceled ones that haven't expired yet
+    const activeSubscription = subscriptionData?.data?.find(sub => {
+        if (!sub.active) return false;
+        // If canceled, check expiry — still has access until period end
+        if (sub.canceledAt || sub.canceled) {
+            return sub.expiry && new Date(sub.expiry) > new Date();
+        }
+        return true;
+    });
     const hasActiveSubscription = !!activeSubscription;
     
     // Album is playable if it's marked as free OR user has active subscription
