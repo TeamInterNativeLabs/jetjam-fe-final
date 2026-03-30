@@ -39,7 +39,7 @@ export const playerSlice = createSlice({
                 albums_to_set = playable.map((item, index) => ({
                     name: item.name,
                     write: "JetJams",
-                    src: imageUrl(item?.file_url),
+                    src: imageUrl(item?.file_url || item?.file),
                     id: index + 1
                 }))
             }

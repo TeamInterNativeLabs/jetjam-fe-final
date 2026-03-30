@@ -51,16 +51,7 @@ const AlbumDetails = () => {
             return;
         }
         
-        // Set up the album for playback before dispatching play
         if (currentDetails) {
-            const albumForPlayer = [{
-                name: currentDetails.name,
-                writer: currentDetails.singer || "Jet Jams",
-                src: imageUrl(currentDetails.file_url),
-                id: 1
-            }];
-            
-            // Set albums first, then play
             dispatch(setAlbums([currentDetails]));
             dispatch(play(id));
         }
