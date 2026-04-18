@@ -2,7 +2,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import SiteButton from '../../Components/Button/button';
 import SiteInput from '../../Components/Input/input';
@@ -20,6 +21,8 @@ const Login = () => {
 
     const [eyeIcon, seteyeIcon] = useState(faEyeSlash)
     const [passwordType, setPasswordType] = useState(0)
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     const toggleIcon = () => {
         if (eyeIcon == faEyeSlash) {
@@ -43,6 +46,10 @@ const Login = () => {
     useEffect(() => {
         if (isSuccess) {
             toast.success(data?.message)
+            const redirect = searchParams.get('redirect');
+            if (redirect) {
+                navigate(decodeURIComponent(redirect), { replace: true });
+            }
         }
     }, [isSuccess])
 

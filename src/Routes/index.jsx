@@ -69,11 +69,7 @@ export default function UserRoutes() {
         <Route path="/subscription-plan/:id" element={<SubscriptionPlan />} />
         <Route
           path="/subscription-confirm"
-          element={
-            <PrivateRoute>
-              <SubscriptionConfirm />
-            </PrivateRoute>
-          }
+          element={<SubscriptionConfirm />}
         />
         <Route path="/payment/:id" element={<Payment />} />
         <Route
