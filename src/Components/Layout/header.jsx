@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import { Col, Container, Dropdown, Nav, Navbar, Row } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { exclamation, logo } from '../../assets'
-// import { chatItems } from '../../../Config/Data'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../Redux/Slices/Auth'
+import { useLogoutApiMutation } from '../../Redux/Services/Auth'
 import SiteButton from '../Button/button'
 import { SiteModal } from '../SiteModal'
 
@@ -17,11 +17,17 @@ export const UserHeader = (props) => {
     const navigate = useNavigate();
     const { isLoggedIn } = useSelector(state => state.authSlice)
     const [show, setShow] = useState(false);
+    const [logoutApi] = useLogoutApiMutation()
 
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
 
-    const actionMethod = () => {
+    const actionMethod = async () => {
+        try {
+            await logoutApi().unwrap()
+        } catch (_) {
+            // ignore — still clear local state
+        }
         dispatch(logout())
         setShow(false)
         navigate('/login');
