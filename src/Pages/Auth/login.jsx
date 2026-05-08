@@ -10,6 +10,7 @@ import SiteInput from '../../Components/Input/input';
 import { UserLayout } from '../../Components/Layout';
 import Loader from '../../Components/Loader';
 import { useLoginMutation } from '../../Redux/Services/Auth';
+import { useSendVerificationEmailMutation } from '../../Redux/Services/Auth';
 import './index.css';
 
 const defaultValues = {
@@ -41,7 +42,9 @@ const Login = () => {
         setChecked(!checked);
     };
 
-    const [login, { data, isSuccess, isLoading }] = useLoginMutation()
+    const [login, { data, isSuccess, isLoading, isError, error }] = useLoginMutation()
+    const [sendVerification, { isLoading: sendingVerification }] = useSendVerificationEmailMutation()
+    const [unverifiedEmail, setUnverifiedEmail] = useState(null)
 
     useEffect(() => {
         if (isSuccess) {
@@ -52,6 +55,13 @@ const Login = () => {
             }
         }
     }, [isSuccess])
+
+    // Handle email_unverified response — show resend option instead of generic error
+    useEffect(() => {
+        if (isError && error?.data?.email_unverified) {
+            setUnverifiedEmail(error.data.email)
+        }
+    }, [isError, error])
 
     const {
         control,
@@ -66,13 +76,35 @@ const Login = () => {
     return (
         <UserLayout>
             <section className="auth-bg">
-                <Loader loading={isLoading} />
+                <Loader loading={isLoading || sendingVerification} />
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
                             <div className="auth-card">
                                 <div className="auth-card-inner">
                                     <h4>Sign In your Account</h4>
+
+                                    {/* Email not verified banner */}
+                                    {unverifiedEmail && (
+                                        <div className="alert alert-warning mt-3 text-center" role="alert">
+                                            <p className="mb-2">Your email is not verified. Please check your inbox for the verification code.</p>
+                                            <button
+                                                type="button"
+                                                className="site-btn"
+                                                onClick={async () => {
+                                                    try {
+                                                        await sendVerification({ email: unverifiedEmail }).unwrap()
+                                                        toast.success('Verification code resent!')
+                                                        navigate(`/register?verify=${encodeURIComponent(unverifiedEmail)}`)
+                                                    } catch (e) {
+                                                        toast.error(e?.data?.message || 'Failed to resend code')
+                                                    }
+                                                }}
+                                            >
+                                                Resend Verification Email
+                                            </button>
+                                        </div>
+                                    )}
                                     <Form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="mt-3">
                                             <Controller

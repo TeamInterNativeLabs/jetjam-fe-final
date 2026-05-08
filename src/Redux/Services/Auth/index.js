@@ -36,6 +36,20 @@ export const authApiService = createApi({
                 body: payload
             })
         }),
+        sendVerificationEmail: builder.mutation({
+            query: (payload) => ({
+                url: 'send-verification-email',
+                method: 'POST',
+                body: payload
+            })
+        }),
+        verifyEmail: builder.mutation({
+            query: (payload) => ({
+                url: 'verify-email',
+                method: 'POST',
+                body: payload
+            })
+        }),
     })
 })
 
@@ -44,4 +58,6 @@ export const {
     useForgetPasswordMutation,
     useVerifyOtpMutation,
     useResetPasswordMutation,
+    useSendVerificationEmailMutation,
+    useVerifyEmailMutation,
 } = authApiService
