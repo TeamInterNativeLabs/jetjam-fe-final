@@ -43,6 +43,12 @@ const apiErrorHandler = (store) => (next) => (action) => {
     if (action.type.endsWith('/rejected')) {
         if (action && action.payload) {
             const { data, status } = action.payload || {}
+
+            // Suppress toast for email_unverified — handled inline on the login page
+            if (data?.email_unverified) {
+                return next(action)
+            }
+
             const message =
                 data?.message ||
                 (action.payload?.error && String(action.payload.error)) ||

@@ -42,7 +42,7 @@ const Login = () => {
 
     const [login, { data, isSuccess, isLoading, isError, error }] = useLoginMutation();
     const [sendVerification, { isLoading: sendingVerification }] = useSendVerificationEmailMutation();
-    const [verifyEmail, { isLoading: verifyingOtp }] = useVerifyEmailMutation();
+    const [verifyEmail, { isLoading: verifyingOtp, isSuccess: verifySuccess, isError: verifyError, error: verifyErrorData }] = useVerifyEmailMutation();
 
     const { control, handleSubmit, formState: { errors } } = useForm({ defaultValues });
 
@@ -69,23 +69,31 @@ const Login = () => {
         }
     }, [isError, error]);
 
+    // Handle verify email result via useEffect — avoids unwrap() issues
+    useEffect(() => {
+        if (verifySuccess) {
+            toast.success('Email verified! You can now log in.');
+            setUnverifiedEmail(null);
+            setOtp('');
+        }
+    }, [verifySuccess]);
+
+    useEffect(() => {
+        if (verifyError) {
+            toast.error(verifyErrorData?.data?.message || 'Invalid or expired code. Please try again.');
+        }
+    }, [verifyError]);
+
     const onSubmit = useCallback((data) => {
         login(data);
     }, [login]);
 
-    const onVerify = async () => {
-        if (!otp || otp.length !== 4) {
+    const onVerify = () => {
+        if (!otp || String(otp).length !== 4) {
             toast.error('Please enter the 4-digit code from your email');
             return;
         }
-        try {
-            await verifyEmail({ email: unverifiedEmail, otp }).unwrap();
-            toast.success('Email verified! You can now log in.');
-            setUnverifiedEmail(null);
-            setOtp('');
-        } catch (e) {
-            toast.error(e?.data?.message || 'Invalid or expired code. Please try again.');
-        }
+        verifyEmail({ email: unverifiedEmail, otp: String(otp) });
     };
 
     const onResend = async () => {
