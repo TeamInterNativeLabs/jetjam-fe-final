@@ -133,9 +133,13 @@ const ForgetPassword = () => {
             case 2:
                 return (
                     <div className='w-100'>
-                        {/* FIX #3: Correct digit count — backend generates 4-digit OTP */}
                         <p className="l-grey-text mb-0 text-center">Please check your email for the verification code. Your code is <strong>4 digits</strong> in length.</p>
-                        <form className="mt-3">
+                        {/* key forces a brand-new form DOM node — prevents browser autofill from
+                            carrying over values from the email step */}
+                        <form key="otp-form" className="mt-3" autoComplete="off">
+                            {/* Hidden dummy fields to confuse browser autofill */}
+                            <input type="text" name="username" style={{ display: 'none' }} readOnly />
+                            <input type="password" name="password" style={{ display: 'none' }} readOnly />
                             <Controller
                                 name='otp'
                                 control={verifyControl}
@@ -157,14 +161,15 @@ const ForgetPassword = () => {
                                             maxLength={4}
                                             placeholder="Enter 4-digit code"
                                             className="site-input"
-                                            autoComplete="one-time-code"
+                                            autoComplete="off"
+                                            data-form-type="other"
                                             value={field.value}
                                             onChange={(e) => {
                                                 const val = e.target.value.replace(/\D/g, '').slice(0, 4);
                                                 field.onChange(val);
                                             }}
                                             onBlur={field.onBlur}
-                                            name="one-time-code"
+                                            name="verification_code_field"
                                             ref={field.ref}
                                         />
                                         {fieldState.error?.message && (
@@ -173,7 +178,6 @@ const ForgetPassword = () => {
                                     </div>
                                 )}
                             />
-                            {/* FIX #4: Resend Code button is now wired up */}
                             <div className="text-end">
                                 <button
                                     className="transparent-btn l-grey-text p-sm underline mt-2"
