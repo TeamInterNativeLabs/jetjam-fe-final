@@ -47,7 +47,7 @@ const ForgetPassword = () => {
     const [setPassword, { data: setPasswordData, isSuccess: setPasswordSuccess, isLoading: setPasswordLoading }] = useResetPasswordMutation();
 
     const { control: forgetControl, handleSubmit: forgetHandleSubmit, getValues: forgetGetValues } = useForm({ defaultValues: { email: '' } });
-    const { control: verifyControl, handleSubmit: verifyHandleSubmit, formState: { errors: verifyErrors } } = useForm({ defaultValues: { otp: '' } });
+    const { control: verifyControl, handleSubmit: verifyHandleSubmit, formState: { errors: verifyErrors }, reset: verifyReset } = useForm({ defaultValues: { otp: '' } });
     const { control: setPasswordControl, handleSubmit: setPasswordHandleSubmit, watch: watchPassword, formState: { errors: passwordErrors } } = useForm({ defaultValues: { password: '', confirm_password: '' } });
 
     useEffect(() => {
@@ -55,6 +55,8 @@ const ForgetPassword = () => {
             toast.success(forgetData?.message || 'Verification code sent to your email');
             setStep(2);
             setResendCooldown(RESEND_COOLDOWN);
+            // Reset OTP field to empty when entering step 2
+            verifyReset({ otp: '' });
         }
     }, [forgotSuccess]);
 
@@ -155,13 +157,14 @@ const ForgetPassword = () => {
                                             maxLength={4}
                                             placeholder="Enter 4-digit code"
                                             className="site-input"
+                                            autoComplete="one-time-code"
                                             value={field.value}
                                             onChange={(e) => {
                                                 const val = e.target.value.replace(/\D/g, '').slice(0, 4);
                                                 field.onChange(val);
                                             }}
                                             onBlur={field.onBlur}
-                                            name={field.name}
+                                            name="one-time-code"
                                             ref={field.ref}
                                         />
                                         {fieldState.error?.message && (
