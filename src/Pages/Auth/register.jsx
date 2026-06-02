@@ -114,14 +114,17 @@ const Register = () => {
                                             </p>
                                         </div>
                                         <div className="mt-4">
-                                            <SiteInput
-                                                label="Verification Code"
-                                                className="p-sm"
-                                                requiredStar
+                                            <label className="site-label mb-1">
+                                                Verification Code <span className="red-text">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                inputMode="numeric"
+                                                maxLength={4}
                                                 placeholder="Enter 4-digit code"
-                                                type="number"
+                                                className="site-input w-100"
                                                 value={otp}
-                                                onChange={e => setOtp(e.target.value)}
+                                                onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 4))}
                                             />
                                         </div>
                                         <div className="text-end mt-1">

@@ -139,21 +139,35 @@ const ForgetPassword = () => {
                                 control={verifyControl}
                                 rules={{
                                     required: 'Verification code is required',
-                                    // FIX #2: Correct validator — numeric, exactly 4 digits
                                     pattern: {
                                         value: /^\d{4}$/,
                                         message: 'Please enter the 4-digit code from your email'
                                     }
                                 }}
                                 render={({ field, fieldState }) => (
-                                    <SiteInput
-                                        placeholder="Enter 4-digit code"
-                                        label="Verification Code"
-                                        requiredStar
-                                        type="number"
-                                        error={fieldState.error?.message}
-                                        {...field}
-                                    />
+                                    <div className="d-flex flex-column w-100">
+                                        <label className="site-label mb-1">
+                                            Verification Code <span className="red-text">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={4}
+                                            placeholder="Enter 4-digit code"
+                                            className="site-input"
+                                            value={field.value}
+                                            onChange={(e) => {
+                                                const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+                                                field.onChange(val);
+                                            }}
+                                            onBlur={field.onBlur}
+                                            name={field.name}
+                                            ref={field.ref}
+                                        />
+                                        {fieldState.error?.message && (
+                                            <label className="site-error mt-1">{fieldState.error.message}</label>
+                                        )}
+                                    </div>
                                 )}
                             />
                             {/* FIX #4: Resend Code button is now wired up */}
