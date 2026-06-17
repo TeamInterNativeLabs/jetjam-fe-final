@@ -3,11 +3,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://13.60.82.114:5000/jetjams/v1/api/:path*"
+      "destination": "https://api.jetjams.net/jetjams/v1/api/:path*"
     },
     {
       "source": "/uploads/:path*",
-      "destination": "http://13.60.82.114:5000/uploads/:path*"
+      "destination": "https://api.jetjams.net/uploads/:path*"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
