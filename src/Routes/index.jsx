@@ -24,6 +24,8 @@ import PrivateRoute from "./PrivateRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import SubscriptionPlansListing from "../Pages/SubscriptionPlansListing";
 import AlbumPage from "../Pages/AlbumPage";
+import AlbumPurchase from "../Pages/AlbumPurchase";
+import AlbumDownload from "../Pages/AlbumDownload";
 import SubscriptionConfirm from "../Pages/SubscriptionConfirm";
 
 export default function UserRoutes() {
@@ -34,6 +36,9 @@ export default function UserRoutes() {
       <ScrollToTop />
       <Routes>
         <Route path="/purchase-album" element={<AlbumPage />} />
+        <Route path="/purchase-album/:id" element={<AlbumPage />} />
+        <Route path="/album-purchase/:id" element={<AlbumPurchase />} />
+        <Route path="/album-download/:token" element={<AlbumDownload />} />
         <Route path="/" element={<Home />} />
         <Route
           path="/login"

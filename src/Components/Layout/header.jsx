@@ -28,6 +28,8 @@ export const UserHeader = (props) => {
         } catch (_) {
             // ignore — still clear local state
         }
+        // Clear remember me so next login defaults to session-only
+        localStorage.removeItem('jetjams_remember_me')
         dispatch(logout())
         setShow(false)
         navigate('/login');

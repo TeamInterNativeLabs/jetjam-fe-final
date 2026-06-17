@@ -12,6 +12,7 @@ import {
     persistStore,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import storageSession from 'redux-persist/lib/storage/session'
 import { albumApiService } from "../Services/Album"
 import { authApiService } from "../Services/Auth"
 import { feedbackApiService } from "../Services/Feedback"
@@ -69,7 +70,9 @@ const apiErrorHandler = (store) => (next) => (action) => {
 
 const persistConfig = {
     key: 'jetjams-9915aba1-7845-4aee-9c1f-f9b28e8fa2fb',
-    storage: storage
+    // Use localStorage if rememberMe flag is set, otherwise sessionStorage
+    storage: localStorage.getItem('jetjams_remember_me') === 'true' ? storage : storageSession,
+    whitelist: ['authSlice', 'generalSlice', 'playerSlice'],
 }
 
 export const rootReducers = combineReducers({

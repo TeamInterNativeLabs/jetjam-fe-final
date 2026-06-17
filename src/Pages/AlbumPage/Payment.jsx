@@ -1,145 +1,131 @@
-import React, { useEffect, useState } from "react";
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import React, { useState } from "react";
+import { PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import CircularCountdown from "./CircularCountdown";
 import { content_bg3 } from "../../assets";
 import { getApiBaseUrl } from "../../Config/env";
 import "./payment.css";
 
 function PaypalPayment({ album }) {
-  const [paid, setPaid] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(300);
-  const [timerActive, setTimerActive] = useState(false);
-  const [downloading, setDownloading] = useState(false);
-
-  // Get auth token from Redux to send with download request
+  const [paid,          setPaid]          = useState(false);
+  const [downloading,   setDownloading]   = useState(false);
+  const [downloadToken, setDownloadToken] = useState(null);
+  const [payerEmail,    setPayerEmail]    = useState(null);
   const { token } = useSelector((state) => state.authSlice);
-
-  useEffect(() => {
-    let timer;
-    if (paid && timeLeft > 0) {
-      setTimerActive(true);
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    }
-    if (timeLeft === 0) {
-      setTimerActive(false);
-    }
-    return () => clearInterval(timer);
-  }, [paid, timeLeft]);
 
   const thanks = "Thank you for supporting the artist! ❤️".split(" ");
 
-  // FIX #6: Secure download — calls backend endpoint that verifies purchase
+  // Download using secure token — no login required, works forever
   const handleDownload = async () => {
-    if (!album?._id) return;
     setDownloading(true);
     try {
-      const response = await fetch(
-        `${getApiBaseUrl()}/album/download/${album._id}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const url = downloadToken
+        ? `${getApiBaseUrl()}/album/download-by-token/${downloadToken}`
+        : `${getApiBaseUrl()}/album/download/${album._id}`;
 
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        alert(err.message || "Download failed. Please try again.");
+      const headers = (!downloadToken && token)
+        ? { Authorization: `Bearer ${token}` }
+        : {};
+
+      const res = await fetch(url, { headers });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        alert(err.message || "Download failed. Please use the link in your email.");
         return;
       }
-
-      // Stream the file as a download
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${album?.name || "album"}.zip`;
+      const blob   = await res.blob();
+      const objUrl = window.URL.createObjectURL(blob);
+      const a      = document.createElement("a");
+      a.href        = objUrl;
+      a.download    = `${album?.name || "album"}.zip`;
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(objUrl);
     } catch (err) {
-      console.error("Download error:", err);
-      alert("Download failed. Please try again.");
+      alert("Download failed. Please use the link in your email.");
     } finally {
       setDownloading(false);
     }
   };
 
+  const createOrder = async () => {
+    const res = await fetch(`${getApiBaseUrl()}/album/create-album-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ albumId: album?._id, price: album?.price }),
+    });
+    const data = await res.json();
+    if (!data.id) throw new Error(data.message || "Order creation failed");
+    return data.id;
+  };
+
+  const onApprove = async (data) => {
+    const res = await fetch(`${getApiBaseUrl()}/album/capture-album-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ order_id: data.orderID }),
+    });
+    const result = await res.json();
+    if (result.success) {
+      setDownloadToken(result.download_token || null);
+      setPayerEmail(result.payer_email || null);
+      setPaid(true);
+    } else {
+      alert(result.message || "Payment capture failed. Please contact support.");
+    }
+  };
+
+  const onError = (err) => {
+    console.error("PayPal error:", err);
+    alert("Payment failed. Please try again.");
+  };
+
   return (
     <div className="payment-screen">
-      <img src={content_bg3} className="payment-bg" alt="Background" />
-      <div className="album-container">
-        <p className="album-heading">PURCHASE THIS ALBUM</p>
-        <p className="album-paragraph">
-          Hey! To get access to this album, please complete the payment.
-        </p>
-        <p className="album-paragraph">
-          Once your payment is successful, a <strong>download button</strong>{" "}
-          for the album{" "}
-          <span style={{ fontFamily: "sans-serif", fontSize: "smaller", color: "rgb(60, 191, 243)" }}>
-            (.zip)
-          </span>{" "}
-          file will appear.
-        </p>
-        <p>
-          ⏳ <strong className="album-warning">Important:</strong> The download
-          button will only be available for <strong>5 minutes</strong>.
-        </p>
-      </div>
+      <img src={content_bg3} className="payment-bg" alt="" />
 
       {!paid ? (
-        <div className="payment-button">
-          <PayPalButtons
-            createOrder={async () => {
-              const response = await fetch(
-                `${getApiBaseUrl()}/album/create-album-order`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                  },
-                  body: JSON.stringify({
-                    albumId: album?._id,
-                    price: album?.price,
-                  }),
-                }
-              );
-              const data = await response.json();
-              if (!data.id) throw new Error(data.message || "Order creation failed");
-              return data.id;
-            }}
-            onApprove={async (data) => {
-              const res = await fetch(
-                `${getApiBaseUrl()}/album/capture-album-order`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                  },
-                  body: JSON.stringify({ order_id: data.orderID }),
-                }
-              );
-              const result = await res.json();
-              if (result.success) {
-                setPaid(true);
-              } else {
-                alert(result.message || "Payment capture failed");
-              }
-            }}
-            onError={(err) => {
-              console.error(err);
-              alert("Payment failed. Please try again.");
-            }}
-            className="p-button"
-          />
+        <div className="payment-content">
+          <h2 className="album-heading">Complete Purchase</h2>
+          <p className="album-price-label">${album?.price}</p>
+          <p className="album-name-label">{album?.name}</p>
+          <div className="payment-divider" />
+
+          <div className="payment-button">
+            <PayPalButtons
+              style={{ layout: "vertical", color: "blue", shape: "rect", label: "pay", height: 45 }}
+              fundingSource={FUNDING.PAYPAL}
+              createOrder={createOrder}
+              onApprove={onApprove}
+              onError={onError}
+              className="p-button"
+            />
+            <PayPalButtons
+              style={{ layout: "vertical", color: "black", shape: "rect", height: 45 }}
+              fundingSource={FUNDING.CARD}
+              createOrder={createOrder}
+              onApprove={onApprove}
+              onError={onError}
+              className="p-button"
+            />
+          </div>
+
+          <p style={{ fontSize: '11px', color: '#4a7c9e', textAlign: 'center', marginTop: '4px' }}>
+            🔒 Secured by PayPal · All payments go to JetJams LLC
+          </p>
+          <button
+            onClick={() => {/* handled by parent setBuy */}}
+            style={{ background: 'none', border: 'none', color: '#4a7c9e', fontSize: '12px', cursor: 'pointer', marginTop: '4px', textDecoration: 'underline' }}
+          >
+            ← Back to album
+          </button>
         </div>
       ) : (
         <motion.div
@@ -148,23 +134,28 @@ function PaypalPayment({ album }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          {timerActive && timeLeft > 0 && (
-            <CircularCountdown timeLeft={timeLeft} />
-          )}
+          <div className="success-icon">✓</div>
+          <p style={{ color: '#F6D027', fontSize: '22px', fontWeight: 800, margin: 0 }}>
+            Payment Successful!
+          </p>
+          <p style={{ color: '#aaa', fontSize: '13px', margin: 0, textAlign: 'center', maxWidth: '320px' }}>
+            Your album is ready to download.
+            {payerEmail && (
+              <> A permanent download link has also been sent to <strong style={{ color: '#3cbff3' }}>{payerEmail}</strong>.</>
+            )}
+            <br />You can download as many times as you want — no expiry.
+          </p>
+
           <motion.button
             className="download-button"
-            disabled={timeLeft <= 0 || downloading}
+            disabled={downloading}
             onClick={handleDownload}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            animate={
-              timeLeft <= 30 && timeLeft > 0
-                ? { scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 1 } }
-                : {}
-            }
           >
-            {downloading ? "Downloading…" : timeLeft > 0 ? "Download" : "Link Expired"}
+            {downloading ? "Downloading…" : "⬇ Download Album"}
           </motion.button>
+
           <p className="album-thanks">
             {thanks.map((el, i) => (
               <motion.span

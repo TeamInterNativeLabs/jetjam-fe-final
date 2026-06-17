@@ -47,5 +47,11 @@ export const imageUrl = (path) => {
   if (relative && IMAGE_PATH_PREFIX && !relative.includes('/')) {
     relative = `${IMAGE_PATH_PREFIX}/${relative}`;
   }
-  return relative ? `${base}/${relative}` : base;
+  // Encode each path segment to handle spaces and special characters in filenames
+  // but don't encode the slashes between segments
+  const encodedRelative = relative
+    .split('/')
+    .map(segment => encodeURIComponent(segment))
+    .join('/');
+  return encodedRelative ? `${base}/${encodedRelative}` : base;
 };

@@ -14,61 +14,59 @@ import {
 } from "../../assets";
 import { getApiBaseUrl, imageUrl } from "../../Config/env";
 
-export const AlbumContent = ({ setBuy, setAlbum }) => {
+export const AlbumContent = ({ setBuy, setAlbum, albumId }) => {
   const [albumData, setAlbumData] = useState();
+  const [loading,   setLoading]   = useState(true);
+  const [error,     setError]     = useState(null);
+
   const getAlbumData = async () => {
     try {
-      const res = await fetch(
-        `${getApiBaseUrl()}/album/get-paid-album`
-      );
+      setLoading(true);
+      setError(null);
+      // If albumId is provided fetch that specific album, otherwise fetch the active one
+      const url = albumId
+        ? `${getApiBaseUrl()}/album/get-paid-album/${albumId}`
+        : `${getApiBaseUrl()}/album/get-paid-album`;
 
-      const json = await res.json(); // 👈 parse the JSON body
+      const res  = await fetch(url);
+      const json = await res.json();
 
-      if (!json.success) throw new Error("Failed to fetch album data");
+      if (!json.success) throw new Error(json.message || "Failed to fetch album data");
 
-      console.log("Album Data: ", json?.data);
       setAlbumData(json.data);
       setAlbum(json.data);
-    } catch (error) {
-      console.error("Error fetching album:", error);
+    } catch (err) {
+      console.error("Error fetching album:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const data = {
-      title: "Skyline Stories",
-      description:
-        `"Skyline Stories" captures the essence of urban youth, late-night walks, and stories told under neon skies with a nostalgic yet fresh vibe.`.split(
-          " "
-        ),
-      trackList: [
-        { title: "Hanging High", artist: "Skyro" },
-        { title: "Neon Conversations", artist: "Luma" },
-        { title: "Faded Graffiti", artist: "Kairo" },
-        { title: "Cloud Tapes", artist: "Luna Vale" },
-        { title: "Night Drip", artist: "Solvane" },
-        { title: "City Static", artist: "Jaxon Grey" },
-        { title: "Glow in Transit", artist: "Ivy Echo" },
-        { title: "Concrete Dreams", artist: "V!be" },
-        { title: "Stolen Frequencies", artist: "Mira Rae" },
-        { title: "Afterhours Echoes", artist: "Felix Shore" },
-        { title: "Streetlight Diaries", artist: "Rhea" },
-        { title: "Midnight Monologue", artist: "Azura" },
-      ],
-      price: 9.99,
-      bpm: 190,
-      minutes: 48,
-      album_cover,
-    };
-    // setAlbumData(data);
     getAlbumData();
-
-    console.log(data);
-  }, []);
+  }, [albumId]);
 
   return (
     <div>
-      {albumData && (
+      {loading && (
+        <div style={{ minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F6D027', fontSize: '18px', textAlign: 'center' }}>
+          <div>
+            <div style={{ fontSize: '32px', marginBottom: '12px' }}>🎵</div>
+            Loading album...
+          </div>
+        </div>
+      )}
+      {error && (
+        <div style={{ minHeight: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ color: '#ff6b6b', textAlign: 'center', padding: '20px' }}>
+            <div style={{ fontSize: '32px', marginBottom: '12px' }}>⚠️</div>
+            <p>Could not load album.</p>
+            <p style={{ fontSize: '12px', color: '#aaa' }}>{error}</p>
+          </div>
+        </div>
+      )}
+      {!loading && !error && albumData && (
         <div className="album-content-wrapper">
           <div
             className="album-image"

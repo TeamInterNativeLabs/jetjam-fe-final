@@ -1,0 +1,245 @@
+.album-purchase-page {
+  min-height: 80vh;
+  padding: 40px 20px;
+}
+
+.ap-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Left — album info */
+.ap-info {
+  flex: 1;
+  min-width: 280px;
+  max-width: 480px;
+}
+
+.ap-cover-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.ap-cover {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+}
+
+.ap-price-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #F6D027;
+  color: #000;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.ap-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.ap-genre {
+  color: #F6D027;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.ap-description {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.ap-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.ap-meta-chip {
+  background: rgba(246, 208, 39, 0.15);
+  color: #F6D027;
+  border: 1px solid rgba(246, 208, 39, 0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ap-tracklist {
+  margin-top: 16px;
+}
+
+.ap-tracklist-title {
+  color: #F6D027;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.ap-tracklist ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.ap-tracklist li {
+  color: #ccc;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* Right — payment */
+.ap-payment {
+  flex: 1;
+  min-width: 280px;
+  max-width: 420px;
+}
+
+.ap-buy-section {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.ap-buy-section h2 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ap-price-display {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ap-price-amount {
+  font-size: 42px;
+  font-weight: 900;
+  color: #F6D027;
+}
+
+.ap-price-note {
+  font-size: 12px;
+  color: #888;
+}
+
+.ap-buy-desc {
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.ap-secure-note {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+/* Success state */
+.ap-success {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(246, 208, 39, 0.3);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.ap-success-icon {
+  width: 64px;
+  height: 64px;
+  background: #F6D027;
+  color: #000;
+  font-size: 28px;
+  font-weight: 900;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.ap-success h2 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.ap-success p {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.ap-download-btn {
+  background: #F6D027;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.ap-download-btn:hover { opacity: 0.85; }
+.ap-download-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ap-login-note {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.ap-login-btn {
+  display: block;
+  background: #F6D027;
+  color: #000;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ap-error {
+  text-align: center;
+  padding: 60px 20px;
+  color: #aaa;
+}
+
+.ap-error h3 { color: #fff; margin-bottom: 8px; }
+
+@media (max-width: 768px) {
+  .ap-container { flex-direction: column; }
+  .ap-info, .ap-payment { max-width: 100%; }
+}

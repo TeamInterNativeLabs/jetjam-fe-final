@@ -31,7 +31,11 @@ const SubscriptionLogs = () => {
   });
 
   const subscriptionList = data?.data || [];
-  const activeSubscription = subscriptionList.find((s) => s.active);
+  // The most recent active subscription is the current one
+  // Sort by createdAt descending to find the true current subscription
+  const sortedList = [...subscriptionList].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const activeSubscription = sortedList.find((s) => s.active && !s.canceledAt) 
+    || sortedList.find((s) => s.active); // fallback: active even if canceled (still has access)
   const hasActiveSubscription = !!activeSubscription;
 
   const onClickSubscriptions = () => {
@@ -154,10 +158,14 @@ const SubscriptionLogs = () => {
                     <td>{formatDate(item?.expiry)}</td>
                     <td>{item?.package ? `$ ${item.package.price}` : "—"}</td>
                     <td>
-                      {item.active
-                        ? "Active"
+                      {item._id === activeSubscription?._id
+                        ? item.canceledAt || item.canceled
+                          ? "Canceled (access until period end)"
+                          : "Active"
                         : item.canceledAt || item.canceled
                         ? "Canceled"
+                        : item.active
+                        ? "Superseded"
                         : "Inactive"}
                     </td>
                   </tr>

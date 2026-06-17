@@ -27,7 +27,10 @@ const Login = () => {
         setPasswordType(prev => prev === 0 ? 1 : 0);
     };
 
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(() => {
+        // Pre-fill checkbox from previous session
+        return localStorage.getItem('jetjams_remember_me') === 'true';
+    });
 
     // Unverified email state — switches the form to OTP verification mode
     const [unverifiedEmail, setUnverifiedEmail] = useState(null);
@@ -85,8 +88,10 @@ const Login = () => {
     }, [verifyError]);
 
     const onSubmit = useCallback((data) => {
+        // Save remember me preference — store uses this to decide localStorage vs sessionStorage
+        localStorage.setItem('jetjams_remember_me', checked ? 'true' : 'false');
         login(data);
-    }, [login]);
+    }, [login, checked]);
 
     const onVerify = () => {
         if (!otp || String(otp).length !== 4) {

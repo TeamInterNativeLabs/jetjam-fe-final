@@ -34,11 +34,16 @@ export const playerSlice = createSlice({
             let ids = []
 
             if (tracks && tracks?.length > 0) {
-                const playable = tracks.filter(item => item.playable)
+                // Include albums that are either playable OR have a file/file_url
+                const playable = tracks.filter(item =>
+                    item.playable === true ||
+                    item.file_url ||
+                    item.file
+                )
                 ids = playable.map(item => item._id)
                 albums_to_set = playable.map((item, index) => ({
                     name: item.name,
-                    write: "JetJams",
+                    write: item.singer || "JetJams",
                     src: imageUrl(item?.file_url || item?.file),
                     id: index + 1
                 }))

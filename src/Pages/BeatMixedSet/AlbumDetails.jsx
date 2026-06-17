@@ -11,7 +11,7 @@ import { useGetSubscriptionsQuery } from "../../Redux/Services/Subscription";
 import { formatSecondsToHHMM } from "../../Utils/helper";
 import AlbumSongCard from "./AlbumSongCard";
 import "./index.css";
-import { play, setAlbums } from "../../Redux/Slices/Player";
+import { play, pause, setAlbums } from "../../Redux/Slices/Player";
 import { imageUrl } from "../../Config/env";
 import { placeholder } from "../../assets";
 
@@ -50,11 +50,18 @@ const AlbumDetails = () => {
             navigate("/subscription-plans");
             return;
         }
-        
-        if (currentDetails) {
-            dispatch(setAlbums([currentDetails]));
-            dispatch(play(id));
+
+        if (!currentDetails) return;
+
+        // If this album is already playing — pause it
+        if (isPlaying && track_id === id) {
+            dispatch(pause());
+            return;
         }
+
+        // Otherwise set albums and start playing
+        dispatch(setAlbums([currentDetails]));
+        dispatch(play(id));
     };
 
     return (
