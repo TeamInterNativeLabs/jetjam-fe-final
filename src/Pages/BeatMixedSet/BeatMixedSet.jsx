@@ -68,7 +68,6 @@ const BeatMixedSet = () => {
 
         const response = await fetch(`${url}${params.toString()}`, { headers });
         const json = await response.json();
-        const json = await response.json();
 
         // Comprehensive deduplication to prevent showing the same demo multiple times
         const deduplicatedData = {
