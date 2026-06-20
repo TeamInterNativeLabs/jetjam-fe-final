@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { store } from "../../Redux/Store";
 import EmptyComponent from "../../Components/EmptyComponent";
 import { SiteSelect } from "../../Components/Input/select";
 import { UserLayout } from "../../Components/Layout";
 import Loader from "../../Components/Loader";
 import SongCard from "../Home/TrendingDanceAndFitness/SongCard";
+import CustomAudioPlayer from "../../Components/AudioPlayer/AudioPlayer";
 import "./index.css";
 import SiteInput from "../../Components/Input/input";
 import useDebounce from "../../Hooks/useDebounce";
@@ -60,7 +62,12 @@ const BeatMixedSet = () => {
         if (page) params.append("page", page);
         params.append("rowsPerPage", maxcards);
 
-        const response = await fetch(`${url}${params.toString()}`);
+        // Send auth token so ByPass middleware can determine playable albums for subscribed users
+        const token = store.getState()?.authSlice?.token;
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+        const response = await fetch(`${url}${params.toString()}`, { headers });
+        const json = await response.json();
         const json = await response.json();
 
         // Comprehensive deduplication to prevent showing the same demo multiple times
@@ -231,6 +238,8 @@ const BeatMixedSet = () => {
           </div>
         </div>
       </section>
+      {/* Audio player — shown when a track is playing */}
+      <CustomAudioPlayer />
     </UserLayout>
   );
 };
