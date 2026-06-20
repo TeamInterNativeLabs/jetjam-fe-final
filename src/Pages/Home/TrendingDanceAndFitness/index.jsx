@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import CustomAudioPlayer from '../../../Components/AudioPlayer/AudioPlayer'
+import React from 'react'
 import { useGetAlbumsQuery } from '../../../Redux/Services/Album'
 import './index.css'
 import SongSets from './SongSets'
@@ -11,11 +10,6 @@ export const TrendingDanceAndFitness = () => {
     const { data: trendingAlbum } = useGetAlbumsQuery({ trending: true, page: 1 }, { refetchOnReconnect: true, refetchOnMountOrArgChange: true, refetchOnFocus: true })
     const { data: suggestedAlbum } = useGetAlbumsQuery({ suggested: true, page: 1 }, { refetchOnReconnect: true, refetchOnMountOrArgChange: true, refetchOnFocus: true })
     const { data: newAlbum } = useGetAlbumsQuery({ newAlbum: true, page: 1 }, { refetchOnReconnect: true, refetchOnMountOrArgChange: true, refetchOnFocus: true })
-
-    const [showPlayer, setShowPlayer] = useState(false);
-    const handleChange = () => {
-        setShowPlayer(!showPlayer);
-    }
 
     return (
         <section className="trending-dance-and-fitness pb-sm-5 pb-4">
@@ -32,7 +26,7 @@ export const TrendingDanceAndFitness = () => {
                                                 {
                                                     trendingAlbum?.data?.length > 0 ?
                                                         trendingAlbum?.data?.map((item) => (
-                                                            <TrendingPlaylistCard handleChange={handleChange} data={item} key={item._id} />
+                                                            <TrendingPlaylistCard data={item} key={item._id} />
                                                         )) : <EmptyComponent />
                                                 }
                                             </div>
@@ -50,9 +44,7 @@ export const TrendingDanceAndFitness = () => {
                     </div>
                 </div>
             </div>
-            {showPlayer && (
-                <CustomAudioPlayer />
-            )}
+            {/* Audio player is rendered globally in App.jsx — no duplicate needed here */}
         </section>
     )
 }

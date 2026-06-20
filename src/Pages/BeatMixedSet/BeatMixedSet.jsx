@@ -6,7 +6,6 @@ import { SiteSelect } from "../../Components/Input/select";
 import { UserLayout } from "../../Components/Layout";
 import Loader from "../../Components/Loader";
 import SongCard from "../Home/TrendingDanceAndFitness/SongCard";
-import CustomAudioPlayer from "../../Components/AudioPlayer/AudioPlayer";
 import "./index.css";
 import SiteInput from "../../Components/Input/input";
 import useDebounce from "../../Hooks/useDebounce";
@@ -237,8 +236,7 @@ const BeatMixedSet = () => {
           </div>
         </div>
       </section>
-      {/* Audio player — shown when a track is playing */}
-      <CustomAudioPlayer />
+      {/* Audio player is rendered globally in App.jsx */}
     </UserLayout>
   );
 };
