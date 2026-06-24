@@ -13,7 +13,7 @@ function PaypalPayment({ album }) {
   const [payerEmail,    setPayerEmail]    = useState(null);
   const { token } = useSelector((state) => state.authSlice);
 
-  const thanks = "Thank you for supporting the artist! ❤️".split(" ");
+  const thanks = "Thank You".split(" ");
 
   // Download using secure token — no login required, works forever
   const handleDownload = async () => {

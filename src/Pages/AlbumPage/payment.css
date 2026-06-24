@@ -82,14 +82,16 @@
 
 .payment-button {
   width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .p-button {
   width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* ── Success / Download ── */
@@ -135,11 +137,12 @@
 .download-button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .album-thanks {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
-  font-family: "Great Vibes", cursive;
+  font-family: inherit;
   line-height: 1.4;
+  letter-spacing: 0.5px;
 }
 
 /* ── Fix PayPal hosted field labels color ── */
