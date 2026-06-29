@@ -8,7 +8,6 @@ import BeatmixPlayStation from "./AlbumRelease/BeatmixPlayStation";
 import { Banner } from "./Banner";
 import ShadowDivider from "./Divider";
 import FitMixMessage from "./FitMixMessage";
-import HomeVideo from "./HomeVideo/HomeVideo";
 import "./index.css";
 import JetJamsLiveStream from "./JetJamsLiveStream";
 import SaturdayNiteParty from "./SaturdayNiteParty";
@@ -65,7 +64,6 @@ export const Home = () => {
       <div id="fitmix-section">
         <FitMixMessage />
       </div>
-      <HomeVideo />
       <TrendingDanceAndFitness />
       <JetJamsLiveStream />
       <div id="subscription-section">
